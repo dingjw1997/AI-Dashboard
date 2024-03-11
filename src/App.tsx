@@ -1,25 +1,28 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+} from 'react-router-dom';
+
+import Home from './pages/Home/Home';
+import Alerts from './pages/Alerts/Alerts';
+import DataIO from './pages/Data-IO/Data-IO';
+import Status from './pages/Status/Status';
+import Zones from './pages/Zones/Zones';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div></div>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/alerts" element={<Alerts />} />
+        <Route path="/data-io" element={<DataIO />} />
+        <Route path="/status" element={<Status />} />
+        <Route path="/zones" element={<Zones />} />
+      </Routes>
+    </Router>
   );
 }
 
