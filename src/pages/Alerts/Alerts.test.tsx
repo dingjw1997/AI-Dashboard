@@ -25,6 +25,6 @@ test('renders Alerts component', () => {
   const zone5Element = screen.getByText(/Zone 5/i);
   expect(zone5Element).toBeInTheDocument();
 
-  const alertsElement = screen.getByText(/Alerts/i);
+  const alertsElement = screen.getByRole('heading', { name: 'Alerts' });
   expect(alertsElement).toBeInTheDocument();
 });
