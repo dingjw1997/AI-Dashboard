@@ -1,4 +1,5 @@
 import React from 'react';
+import Header from '../../components/Header/Header';
 
 import {
   Chart as ChartJS,
@@ -70,6 +71,7 @@ function PieChart() {
 function Status() {
   return (
     <div>
+      <Header />
       <h2 className='m-3 d-block'>Status Readout</h2>
       <div style={{ display: 'flex', justifyContent: 'space-around' }}>
         <div data-testid="line-chart-container" className='d-flex justify-content-center' style={{width: '50%', height: '500px'}}>
