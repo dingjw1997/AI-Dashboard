@@ -95,19 +95,20 @@ function Status() {
     <div>
       <Header title="Status Readout" activeLink="Status" />
 
-      <div className="d-flex justify-content-around pt-5 border-bottom border-secondary-subtle">
-        <div className="d-flex justify-content-center w-50" style={{height: '350px'}}>
+      <div className="d-flex justify-content-around pt-5">
+        <div className="d-flex justify-content-center w-50" style={{height: '400px'}}>
           <Line data={lineData1} />
         </div>
-        <div className="d-flex justify-content-center w-25" style={{height: '350px'}}>
+        <div className="d-flex justify-content-center w-25" style={{height: '400px'}}>
           <Pie data={pieData1} />
         </div>
       </div>
+
       <div className="d-flex justify-content-around pt-5">
-        <div className="d-flex justify-content-center w-50" style={{height: '350px'}}>
+        <div className="d-flex justify-content-center w-50" style={{height: '400px'}}>
           <Line data={lineData2} />
         </div>
-        <div className="d-flex justify-content-center w-25" style={{height: '350px'}}>
+        <div className="d-flex justify-content-center w-25" style={{height: '400px'}}>
           <Pie data={pieData2} />
         </div>
       </div>
