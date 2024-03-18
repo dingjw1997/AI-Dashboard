@@ -62,7 +62,8 @@ function PieChart() {
 function Status() {
   return (
     <div>
-      <Header />
+      <Header title="Status Readout" activeLink="Status" />
+
       <div className="d-flex justify-content-around pt-5 border-bottom border-secondary-subtle">
         <div data-testid="line-chart-container" className="d-flex justify-content-center w-50" style={{height: '350px'}}>
           <LineGraph />

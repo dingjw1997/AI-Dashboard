@@ -14,7 +14,7 @@ function Zones() {
   return (
     <div>
       <div className="Header" data-testid="header-component">
-        <Header />
+        <Header title="Zones" activeLink="Zones" />
       </div>
       <div className="App">
         <header className="App-header">

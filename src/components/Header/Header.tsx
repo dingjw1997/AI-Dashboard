@@ -1,9 +1,26 @@
 import React from "react";
 import styles from './Header.module.css';
 
-function Header() {
+interface NavLink {
+  href: string;
+  text: string;
+}
+
+interface HeaderProps {
+  title?: string;
+  activeLink?: string; 
+}
+
+const navLinks: NavLink[] = [
+  { href: "/alerts/", text: "Alerts" },
+  { href: "/data-io/", text: "I/O" },
+  { href: "/status/", text: "Status" },
+  { href: "/zones/", text: "Zones" },
+];
+
+function Header({ title = "AI Dashboard", activeLink }: HeaderProps) {
     return (
-        <div className="container-fluid p-0 bg-light sticky-top">
+        <div className="container-fluid p-0 bg-light sticky-top shadow-sm">
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
                 <div className="container d-flex flex-nowrap">
 
@@ -14,19 +31,21 @@ function Header() {
                             </div>
                         </a>
 
-                        <a className="navbar-brand flex-grow-1 ms-3 fs-4" href="/">AI Dashboard</a>
+                        <a className="navbar-brand flex-grow-1 ms-3 fs-4" href="/">{title}</a>
                     </div>
 
                     <div className="d-none d-md-flex align-items-center gap-4 fs-5">
-                        <div className="d-flex align-items-center gap-4">
-                            <a className="nav-link flex-grow-1" href="/alerts/">Alerts</a>
-                            <a className="nav-link flex-grow-1" href="/data-io/">I/O</a>
-                            <a className="nav-link flex-grow-1" href="/status/">Status</a>
-                            <a className="nav-link flex-grow-1" href="/zones/">Zones</a>
+                        <div className="navbar-nav d-flex align-items-center gap-4">
+                            {navLinks.map((link, index) => (
+                                <a key={index}
+                                   className={`nav-link flex-grow-1 ${activeLink === link.text ? "active" : ""}`}
+                                   href={link.href}>
+                                    {link.text}
+                                </a>
+                            ))}
                         </div>
                     </div>
                 </div>
-
             </nav>
         </div>
     );

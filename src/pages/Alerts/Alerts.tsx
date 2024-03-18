@@ -9,7 +9,7 @@ function Alerts() {
   return (
     <div>
       <div className="Header">
-        <Header />
+        <Header title="Alerts" activeLink="Alerts" />
       </div>
       <div className={styles.App}>
         <div className={styles.sidebar}>

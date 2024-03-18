@@ -6,7 +6,7 @@ import './Data-IO.css';
 function DataIO() {
   return (
     <div className="App">
-      <Header />
+      <Header title="ML Data and I/O" activeLink="I/O" />
       <div className="content">
         <div className="left-column">
           <div className="info-item">
