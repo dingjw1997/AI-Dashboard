@@ -15,16 +15,7 @@ import {
 
 import { Line, Pie } from 'react-chartjs-2';
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  ArcElement,
-  Title,
-  Tooltip,
-  Legend
-);
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, ArcElement, Title, Tooltip, Legend);
 
 function LineGraph() {
   const data = {
@@ -72,12 +63,19 @@ function Status() {
   return (
     <div>
       <Header />
-      <h2 className='m-3 d-block'>Status Readout</h2>
-      <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-        <div data-testid="line-chart-container" className='d-flex justify-content-center' style={{width: '50%', height: '500px'}}>
+      <div className="d-flex justify-content-around pt-5 border-bottom border-secondary-subtle">
+        <div data-testid="line-chart-container" className="d-flex justify-content-center w-50" style={{height: '350px'}}>
           <LineGraph />
         </div>
-        <div data-testid="pie-chart-container" className='d-flex justify-content-center' style={{width: '50%', height: '500px'}}>
+        <div data-testid="pie-chart-container" className="d-flex justify-content-center w-25" style={{height: '350px'}}>
+          <PieChart />
+        </div>
+      </div>
+      <div className="d-flex justify-content-around pt-5">
+        <div data-testid="line-chart-container" className="d-flex justify-content-center w-50" style={{height: '350px'}}>
+          <LineGraph />
+        </div>
+        <div data-testid="pie-chart-container" className="d-flex justify-content-center w-25" style={{height: '350px'}}>
           <PieChart />
         </div>
       </div>
