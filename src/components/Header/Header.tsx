@@ -34,6 +34,7 @@ const navLinks: NavLink[] = [
   { href: "/data-io/", text: "I/O" },
   { href: "/status/", text: "Status" },
   { href: "/zones/", text: "Zones" },
+  { href: "/map/", text: "Map" },
 ];
 
 function Header({ title = "AI Dashboard", activeLink }: HeaderProps) {
