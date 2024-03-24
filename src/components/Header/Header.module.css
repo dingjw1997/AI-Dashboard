@@ -5,3 +5,8 @@
 .nav-link {
     white-space: nowrap;
 }
+
+.redZone {
+    color: red !important; /* Add !important to ensure it overrides other styles */
+}
+

@@ -1,54 +1,79 @@
 import React from "react";
 import styles from './Header.module.css';
+import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 
 interface NavLink {
   href: string;
   text: string;
+  dropdown?: DropdownItem[];
+}
+
+interface DropdownItem {
+  href: string;
+  text: string;
+  isZone?: boolean;
 }
 
 interface HeaderProps {
   title?: string;
-  activeLink?: string; 
+  activeLink?: string;
 }
 
 const navLinks: NavLink[] = [
-  { href: "/alerts/", text: "Alerts" },
+  {
+    href: "/alerts/",
+    text: "Alerts",
+    dropdown: [
+      { href: "#", text: "Zone 1", isZone: true },
+      { href: "#", text: "Zone 2", isZone: true },
+      { href: "#", text: "Zone 3", isZone: true },
+      { href: "#", text: "Zone 4", isZone: true },
+      { href: "#", text: "Zone 5", isZone: true }
+    ]
+  },
   { href: "/data-io/", text: "I/O" },
   { href: "/status/", text: "Status" },
   { href: "/zones/", text: "Zones" },
 ];
 
 function Header({ title = "AI Dashboard", activeLink }: HeaderProps) {
-    return (
-        <div className="container-fluid p-0 bg-light sticky-top shadow-sm">
-            <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                <div className="container d-flex flex-nowrap">
-
-                    <div className="d-flex align-items-center">
-                        <a href="/">
-                            <div className={`flex-shrink-0 overflow-hidden ${styles.logo}`}>
-                                <img className={`img-fluid ${styles.logo}`} src="/images/logo.png" alt="logo" />
-                            </div>
-                        </a>
-
-                        <a className="navbar-brand flex-grow-1 ms-3 fs-4" href="/">{title}</a>
-                    </div>
-
-                    <div className="d-none d-md-flex align-items-center gap-4 fs-5">
-                        <div className="navbar-nav d-flex align-items-center gap-4">
-                            {navLinks.map((link, index) => (
-                                <a key={index}
-                                   className={`nav-link flex-grow-1 ${activeLink === link.text ? "active" : ""}`}
-                                   href={link.href}>
-                                    {link.text}
-                                </a>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-            </nav>
-        </div>
-    );
+  return (
+    <Navbar bg="light" expand="lg" sticky="top" className="shadow-sm">
+      <Container fluid>
+        <Navbar.Brand href="/">
+          <img src="/images/logo.png" alt="logo" className={`d-inline-block align-top ${styles.logo}`} />
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
+          <Nav>
+            {navLinks.map((link, index) => (
+              link.dropdown ? (
+                <NavDropdown title={link.text} id={`nav-dropdown-${index}`} key={index}>
+                  {link.dropdown.filter(item => item.isZone).map((item, idx) => (
+                    <NavDropdown.Item 
+                      href={item.href} 
+                      key={idx} 
+                      className={styles.redZone}
+                    >
+                      {item.text}
+                    </NavDropdown.Item>
+                  ))}
+                </NavDropdown>
+              ) : (
+                <Nav.Link 
+                  href={link.href} 
+                  key={index} 
+                  className={activeLink === link.text ? "active" : ""}
+                >
+                  {link.text}
+                </Nav.Link>
+              )
+            ))}
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
+  );
 }
 
 export default Header;
