@@ -10,6 +10,7 @@ import Alerts from './pages/Alerts/Alerts';
 import DataIO from './pages/Data-IO/Data-IO';
 import Status from './pages/Status/Status';
 import Zones from './pages/Zones/Zones';
+import Map from './pages/Map/Map';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/data-io" element={<DataIO />} />
         <Route path="/status" element={<Status />} />
         <Route path="/zones" element={<Zones />} />
+        <Route path ="/map" element={<Map />} />
       </Routes>
     </Router>
   );
