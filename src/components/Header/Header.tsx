@@ -31,7 +31,7 @@ const navLinks: NavLink[] = [
       { href: "#", text: "Zone 5", isZone: true }
     ]
   },
-  { href: "/data-io/", text: "I/O" },
+  { href: "/upload/", text: "Upload" },
   { href: "/status/", text: "Status" },
   { href: "/zones/", text: "Zones" },
   { href: "/map/", text: "Map" },

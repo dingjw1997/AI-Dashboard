@@ -7,7 +7,7 @@ import {
 
 import Home from './pages/Home/Home';
 import Alerts from './pages/Alerts/Alerts';
-import DataIO from './pages/Data-IO/Data-IO';
+import Upload from './pages/Upload/Upload';
 import Status from './pages/Status/Status';
 import Zones from './pages/Zones/Zones';
 import Map from './pages/Map/Map';
@@ -19,7 +19,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/alerts" element={<Alerts />} />
-        <Route path="/data-io" element={<DataIO />} />
+        <Route path="/upload" element={<Upload />} />
         <Route path="/status" element={<Status />} />
         <Route path="/zones" element={<Zones />} />
         <Route path ="/map" element={<Map />} />

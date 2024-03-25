@@ -1,10 +1,10 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import DataIO from './Data-IO';
+import Upload from './Upload';
 import '@testing-library/jest-dom/extend-expect';
 
 test('renders data correctly', () => {
-  const { getByText } = render(<DataIO />);
+  const { getByText } = render(<Upload />);
   
   // Check if the component renders the expected content
   expect(getByText('Status:')).toBeInTheDocument();

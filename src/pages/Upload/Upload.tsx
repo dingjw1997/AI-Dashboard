@@ -1,15 +1,15 @@
 import React from 'react';
 import Header from '../../components/Header/Header';
-import './Data-IO.css';
+import './Upload.css';
 
-function DataIO() {
+function Upload() {
   return (
     <div>
-      <Header title="ML Data and I/O" activeLink="I/O" />
+      <Header title="Upload" activeLink="Upload" />
       <div>
         <p> Placeholder </p>
       </div>
     </div>
   );
 }
-export default DataIO;
+export default Upload;
