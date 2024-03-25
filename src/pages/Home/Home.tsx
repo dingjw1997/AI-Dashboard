@@ -10,7 +10,7 @@ function Home() {
     <Header title="Dashboard" activeLink="Home" />
     
     <div className="centered-h1">
-        <h1>Welcome to AI Dashboard</h1>
+        <h1>AI Dashboard</h1>
       </div>
 
       <div className="container">

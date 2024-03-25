@@ -4,11 +4,12 @@ import './Data-IO.css';
 
 function DataIO() {
   return (
-    <div className="App">
+    <div>
       <Header title="ML Data and I/O" activeLink="I/O" />
-    
+      <div>
+        <p> Placeholder </p>
+      </div>
     </div>
   );
 }
-
 export default DataIO;
