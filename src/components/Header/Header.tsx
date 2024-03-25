@@ -51,21 +51,13 @@ function Header({ title = "AI Dashboard", activeLink }: HeaderProps) {
               link.dropdown ? (
                 <NavDropdown title={link.text} id={`nav-dropdown-${index}`} key={index}>
                   {link.dropdown.filter(item => item.isZone).map((item, idx) => (
-                    <NavDropdown.Item 
-                      href={item.href} 
-                      key={idx} 
-                      className={styles.redZone}
-                    >
+                    <NavDropdown.Item href={item.href} key={idx} className={styles.redZone}>
                       {item.text}
                     </NavDropdown.Item>
                   ))}
                 </NavDropdown>
               ) : (
-                <Nav.Link 
-                  href={link.href} 
-                  key={index} 
-                  className={activeLink === link.text ? "active" : ""}
-                >
+                <Nav.Link href={link.href} key={index} className={activeLink === link.text ? "active" : ""}>
                   {link.text}
                 </Nav.Link>
               )
