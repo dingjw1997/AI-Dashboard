@@ -24,11 +24,11 @@ const navLinks: NavLink[] = [
     href: "/alerts/",
     text: "Alerts",
     dropdown: [
-      { href: "#", text: "Zone 1", isZone: true },
-      { href: "#", text: "Zone 2", isZone: true },
-      { href: "#", text: "Zone 3", isZone: true },
-      { href: "#", text: "Zone 4", isZone: true },
-      { href: "#", text: "Zone 5", isZone: true }
+      { href: "/zone/1", text: "Zone 1", isZone: true },
+      { href: "/zone/2", text: "Zone 2", isZone: true },
+      { href: "/zone/3", text: "Zone 3", isZone: true },
+      { href: "/zone/4", text: "Zone 4", isZone: true },
+      { href: "/zone/5", text: "Zone 5", isZone: true }
     ]
   },
   { href: "/upload/", text: "Upload" },
@@ -41,8 +41,9 @@ function Header({ title = "AI Dashboard", activeLink }: HeaderProps) {
   return (
     <Navbar bg="light" expand="lg" sticky="top" className="shadow-sm">
       <Container fluid>
-        <Navbar.Brand href="/">
+        <Navbar.Brand href="/" className={styles.brandContainer}>
           <img src="/images/logo.png" alt="logo" className={`d-inline-block align-top ${styles.logo}`} />
+          {activeLink && <span className={styles.pageName}>{activeLink}</span>}
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
@@ -51,7 +52,7 @@ function Header({ title = "AI Dashboard", activeLink }: HeaderProps) {
               link.dropdown ? (
                 <NavDropdown title={link.text} id={`nav-dropdown-${index}`} key={index}>
                   {link.dropdown.filter(item => item.isZone).map((item, idx) => (
-                    <NavDropdown.Item href={item.href} key={idx} className={styles.redZone}>
+                    <NavDropdown.Item href={item.href} key={idx} target="_blank" className={styles.redZone}>
                       {item.text}
                     </NavDropdown.Item>
                   ))}
