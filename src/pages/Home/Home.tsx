@@ -1,7 +1,6 @@
 import React from 'react';
 import Header from '../../components/Header/Header';
-import './Home.css';
-import InteractiveMap from '../Map/InteractiveMap'; // Import the InteractiveMap component
+import './Home.css'; // Import the InteractiveMap component
 
 
 function Home() {

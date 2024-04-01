@@ -6,9 +6,7 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
 
-// Interfaces for the dropdown and the type of link for typing our props
 interface DropdownItem {
   href: string;
   text: string;
@@ -23,7 +21,6 @@ interface NavLink {
 const Header: React.FC = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  // Dummy navigation links
   const navLinks: NavLink[] = [
     {
       text: "Alerts",
