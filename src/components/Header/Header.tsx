@@ -1,73 +1,108 @@
-import React from "react";
-import styles from './Header.module.css';
-import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
-
-interface NavLink {
-  href: string;
-  text: string;
-  dropdown?: DropdownItem[];
-}
+import React, { useState } from 'react';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import IconButton from '@mui/material/IconButton';
 
 interface DropdownItem {
   href: string;
   text: string;
-  isZone?: boolean;
 }
 
-interface HeaderProps {
-  title?: string;
-  activeLink?: string;
+interface NavLink {
+  href?: string;
+  text: string;
+  dropdown?: DropdownItem[];
 }
 
-const navLinks: NavLink[] = [
-  {
-    href: "/alerts/",
-    text: "Alerts",
-    dropdown: [
-      { href: "/zone/1", text: "Zone 1", isZone: true },
-      { href: "/zone/2", text: "Zone 2", isZone: true },
-      { href: "/zone/3", text: "Zone 3", isZone: true },
-      { href: "/zone/4", text: "Zone 4", isZone: true },
-      { href: "/zone/5", text: "Zone 5", isZone: true }
-    ]
-  },
-  { href: "/upload/", text: "Upload" },
-  { href: "/status/", text: "Status" },
-  { href: "/zones/", text: "Zones" },
-  { href: "/map/", text: "Map" },
-];
+const Header: React.FC = () => {
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-function Header({ title = "AI Dashboard", activeLink }: HeaderProps) {
+  const navLinks: NavLink[] = [
+    {
+      text: "Alerts",
+      dropdown: [
+        { href: "/zone/1", text: "Zone 1" },
+        { href: "/zone/2", text: "Zone 2" },
+        { href: "/zone/1", text: "Zone 3" },
+        { href: "/zone/2", text: "Zone 4" },
+      ],
+    },
+    { href: "/upload/", text: "Upload" },
+    { href: "/status/", text: "Status" },
+    { href: "/map/", text: "Map" },
+  ];
+
+  const handleMenuClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
-    <Navbar bg="light" expand="lg" sticky="top" className="shadow-sm">
-      <Container fluid>
-        <Navbar.Brand href="/" className={styles.brandContainer}>
-          <img src="/images/logo.png" alt="logo" className={`d-inline-block align-top ${styles.logo}`} />
-          {activeLink && <span className={styles.pageName}>{activeLink}</span>}
-        </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
-          <Nav>
-            {navLinks.map((link, index) => (
-              link.dropdown ? (
-                <NavDropdown title={link.text} id={`nav-dropdown-${index}`} key={index}>
-                  {link.dropdown.filter(item => item.isZone).map((item, idx) => (
-                    <NavDropdown.Item href={item.href} key={idx} target="_blank" className={styles.redZone}>
-                      {item.text}
-                    </NavDropdown.Item>
-                  ))}
-                </NavDropdown>
-              ) : (
-                <Nav.Link href={link.href} key={index} className={activeLink === link.text ? "active" : ""}>
+    <AppBar position="static">
+      <Toolbar>
+        <IconButton
+          size="large"
+          edge="start"
+          color="inherit"
+          aria-label="menu"
+          sx={{ mr: 2 }}
+        >
+          <img src="/images/logo.png" alt="logo" style={{ width: '30px' }} />
+        </IconButton>
+        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          Dashboard
+        </Typography>
+        <div>
+          {navLinks.map((link, index) => (
+            link.dropdown ? (
+              <React.Fragment key={index}>
+                <Button
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={handleMenuClick}
+                  color="inherit"
+                >
                   {link.text}
-                </Nav.Link>
-              )
-            ))}
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+                </Button>
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorEl}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={Boolean(anchorEl)}
+                  onClose={handleMenuClose}
+                >
+                  {link.dropdown.map((item, idx) => (
+                    <MenuItem key={idx} onClick={handleMenuClose}>
+                      {item.text}
+                    </MenuItem>
+                  ))}
+                </Menu>
+              </React.Fragment>
+            ) : (
+              <Button key={index} color="inherit" href={link.href}>
+                {link.text}
+              </Button>
+            )
+          ))}
+        </div>
+      </Toolbar>
+    </AppBar>
   );
-}
+};
 
 export default Header;

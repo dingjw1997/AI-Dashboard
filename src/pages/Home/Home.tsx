@@ -1,13 +1,12 @@
 import React from 'react';
 import Header from '../../components/Header/Header';
-import './Home.css';
-import InteractiveMap from '../Map/InteractiveMap'; // Import the InteractiveMap component
+import './Home.css'; // Import the InteractiveMap component
 
 
 function Home() {
   return (
   <div>
-    <Header title="Dashboard" activeLink="Home" />
+    <Header />
     
     <div className="centered-h1">
         <h1>AI Dashboard</h1>

@@ -44,7 +44,7 @@ function Upload() {
 
   return (
     <div>
-      <Header title="Upload" activeLink="Upload" />
+      <Header />
       <div>
         <input
           type="file"

@@ -55,42 +55,41 @@ function BasicTable() {
   };
 
   return (
-    <div className="w-100 d-flex justify-content-center">
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow >
-              <TableCell sx={{fontWeight: "bold"}}>Asset</TableCell>
-              <TableCell sx={{fontWeight: "bold"}} align="right">No.</TableCell>
-              <TableCell sx={{fontWeight: "bold"}} align="right">Condition</TableCell>
-              <TableCell sx={{fontWeight: "bold"}} align="right">Location</TableCell>
-              <TableCell sx={{fontWeight: "bold"}} align="right">Material</TableCell>
-              <TableCell sx={{fontWeight: "bold"}} align="right">Last Inspection Date</TableCell>
+    <TableContainer component={Paper} square variant="outlined">
+      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell sx={{ fontWeight: 'bold' }}>Asset</TableCell>
+            <TableCell sx={{ fontWeight: 'bold' }} align="right">No.</TableCell>
+            <TableCell sx={{ fontWeight: 'bold' }} align="right">Condition</TableCell>
+            <TableCell sx={{ fontWeight: 'bold' }} align="right">Location</TableCell>
+            <TableCell sx={{ fontWeight: 'bold' }} align="right">Material</TableCell>
+            <TableCell sx={{ fontWeight: 'bold' }} align="right">Last Inspection Date</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {rows.map((row, index) => (
+            <TableRow
+              key={row.name || index}
+              sx={{
+                '&:last-child td, &:last-child th': { border: 0 },
+                '&:hover': { backgroundColor: 'rgba(0, 0, 0, 0.04)' }, 
+                cursor: 'pointer'
+              }}
+              hover 
+              onClick={() => handleRowClick(row)}
+            >
+              <TableCell component="th" scope="row">{row.name}</TableCell>
+              <TableCell align="right">{row.number}</TableCell>
+              <TableCell align="right">{row.condition}</TableCell>
+              <TableCell align="right">{row.location}</TableCell>
+              <TableCell align="right">{row.material}</TableCell>
+              <TableCell align="right">{row.lastInspectionDate}</TableCell>
             </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row) => (
-              <TableRow
-                key={row.name}
-                sx={{
-                  '&:last-child td, &:last-child th': { border: 0 },
-                  '&:hover': { backgroundColor: 'rgba(0, 0, 0, 0.04)' }, 
-                  cursor: 'pointer', 
-                }}
-                onClick={() => handleRowClick(row)} 
-              >
-                <TableCell component="th" scope="row">{row.name}</TableCell>
-                <TableCell align="right">{row.number}</TableCell>
-                <TableCell align="right">{row.condition}</TableCell>
-                <TableCell align="right">{row.location}</TableCell>
-                <TableCell align="right">{row.material}</TableCell>
-                <TableCell align="right">{row.lastInspectionDate}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </div>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 }
 

@@ -1,6 +1,3 @@
-//Reference: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals
-//Reference: https://reactjs.org/docs/components-and-props.html
-//test test 123
 import styles from './Alerts.module.css';
 import Header from '../../components/Header/Header';
 import React, { useState } from 'react';
@@ -24,7 +21,7 @@ function Alerts() {
   return (
     <div>
       <div className="Header">
-        <Header title="Alerts" activeLink="Alerts" />
+        <Header />
       </div>
       <div className={styles.App}>
         <div className={styles.sidebar}>
