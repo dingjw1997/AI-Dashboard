@@ -94,7 +94,7 @@ function Status() {
 
   return (
     <div>
-      <Header title="Status Readout" activeLink="Status" />
+      <Header />
       <BasicTable />
 
       {/* <div className="d-flex justify-content-around pt-5">

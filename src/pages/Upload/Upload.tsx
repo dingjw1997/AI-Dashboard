@@ -5,7 +5,7 @@ import './Upload.css';
 function Upload() {
   return (
     <div>
-      <Header title="Upload" activeLink="Upload" />
+      <Header />
       <div>
         <p> Placeholder </p>
       </div>

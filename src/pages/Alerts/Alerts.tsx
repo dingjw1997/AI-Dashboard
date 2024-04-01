@@ -24,7 +24,7 @@ function Alerts() {
   return (
     <div>
       <div className="Header">
-        <Header title="Alerts" activeLink="Alerts" />
+        <Header />
       </div>
       <div className={styles.App}>
         <div className={styles.sidebar}>

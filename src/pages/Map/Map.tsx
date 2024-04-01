@@ -6,7 +6,7 @@ import InteractiveMap from './InteractiveMap';
 function Map() {
   return (
     <div className="Map">
-        <Header title="Local Map" activeLink="Map" />
+        <Header />
       <InteractiveMap /> 
     </div>
   );

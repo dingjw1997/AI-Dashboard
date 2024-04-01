@@ -7,7 +7,7 @@ import InteractiveMap from '../Map/InteractiveMap'; // Import the InteractiveMap
 function Home() {
   return (
   <div>
-    <Header title="Dashboard" activeLink="Home" />
+    <Header />
     
     <div className="centered-h1">
         <h1>AI Dashboard</h1>
