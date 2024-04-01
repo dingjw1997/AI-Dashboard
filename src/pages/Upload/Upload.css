@@ -1,3 +1,18 @@
 .map-container {
   height: 100vh; /* Set the height to 100% of the viewport height */
 }
+
+.address-field {
+  margin-bottom: 10px; /* Margins between fields */
+}
+
+.address-label { /* Space between type and input field */
+  display: inline-block;
+  width: 150px; 
+}
+
+.address-input { /* Address Input Blocks */
+  height: 30px; 
+  width: 500px; 
+  padding: 15px; 
+}
