@@ -1,6 +1,9 @@
 import React from 'react';
+import { MemoryRouter } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import './Home.css'; // Import the InteractiveMap component
+import InteractiveMap from '../Map/InteractiveMap';
+import BasicTable from '../../components/BasicTable/BasicTable';
 
 
 function Home() {
@@ -15,18 +18,24 @@ function Home() {
       <div className="container">
         <div className="row">
           <div className="block">
+            
             <h2>Alerts</h2>
-          </div>
-          <div className="block">
-            <h2>Map</h2>
-          </div>
-        </div>
-        <div className="row">
+            <ul>
+        <li><a href="/zone/1">Zone 1</a></li>
+        <li><a href="/zone/2">Zone 2</a></li>
+        <li><a href="/zone/3">Zone 3</a></li>
+        <li><a href="/zone/4">Zone 4</a></li>
+           </ul>          
+             </div>
+          
           <div className="block">
             <h2>Status</h2>
+            <BasicTable />
+
           </div>
-          <div className="block">
-            <h2>Block 4</h2>
+          <div className="Map" >
+          <h2 style={{textAlign: 'center'}}>Map</h2>
+                  <InteractiveMap /> 
           </div>
         </div>
       </div>

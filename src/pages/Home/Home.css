@@ -23,13 +23,13 @@
     height: 100vh; /* Set the container height to fill the viewport */
   }
   
-  .row {
-    display: flex;
-    flex: 1;
+  .Map {
+height: 100px !important;
   }
   
   .block {
     flex: 1;
+    height: 600px; 
     background-color: #f0f0f0; /* Grey background color */
     border: 1px solid #ccc; /* Border color */
     display: flex;
@@ -40,3 +40,39 @@
   
 }
   
+.block ul {
+  display: flex;
+  flex-wrap: wrap; /* Allow items to wrap to the next line */
+  padding: 0;
+  list-style-type: none; /* Remove bullet points */
+}
+
+.block ul li {
+  flex: 1 0 150px; /* Set initial size to 150px with flexibility to grow and shrink */
+  margin-right: 10px; /* Adjust spacing between list items */
+  margin-bottom: 10px; /* Add margin to create space between rows */
+}
+
+/* Apply red background to odd list items */
+.block ul li:nth-child(odd) {
+  background-color: red;
+}
+
+/* Apply yellow background to even list items */
+.block ul li:nth-child(even) {
+  background-color: rgb(255, 179, 0);
+}
+
+.block ul li a {
+  display: block; /* Display links as blocks */
+  padding: 10px; /* Add padding to create space around links */
+  text-decoration: none; /* Remove default underline */
+  color: #333; /* Set default link color */
+  border: 1px solid #ccc; /* Add border for visual separation */
+}
+
+.block ul li a:hover {
+  color: #007bff; /* Change link color on hover */
+}
+
+
