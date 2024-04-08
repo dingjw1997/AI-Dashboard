@@ -51,8 +51,10 @@ function BasicTable() {
   const navigate = useNavigate();
 
   const handleRowClick = (row: RowData) => {
+    localStorage.setItem('currentAssetDetails', JSON.stringify(row));
     navigate(`/details/${row.number}`);
   };
+  
 
   return (
     <TableContainer component={Paper} square variant="outlined">
