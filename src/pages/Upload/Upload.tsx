@@ -1,9 +1,14 @@
+/* eslint-disable no-lone-blocks */
 import React, { useRef, useState } from 'react';
+import { TextField, Stack, Typography, Button } from '@mui/material';
+
+
 import Header from '../../components/Header/Header';
 import ContainedButton from '../../components/ContainedButton/ContainedButton';
-import './Upload.css';
 
 function Upload() {
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [address, setAddress] = useState({
     country:'',
     street: '',
@@ -11,7 +16,20 @@ function Upload() {
     state: '',
     postcode: ''
   });
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  
+  const handleAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setAddress(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
+
+  const handleClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files && event.target.files[0];
@@ -29,24 +47,58 @@ function Upload() {
     }
   };
 
-  const handleAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setAddress(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
-  };
-
-  const handleClick = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
-  };
-
   return (
     <div>
       <Header />
-      <div>
+      <Stack spacing={2} pt={2} px={3} alignItems="center" sx={{ height: "100vh" }}>
+        <Typography variant="h4" component="h4">Location</Typography>
+
+        <TextField 
+          id="country-field" 
+          label="Country" 
+          variant="outlined" 
+          name="country" 
+          value={address.country} 
+          onChange={handleAddressChange} 
+          sx={{ minWidth: "45%" }}
+        />
+        <TextField 
+          id="street-field" 
+          label="Street" 
+          variant="outlined" 
+          name="street" 
+          value={address.street} 
+          onChange={handleAddressChange} 
+          sx={{ minWidth: "45%" }}
+        />
+        <TextField 
+          id="city-field" 
+          label="City" 
+          variant="outlined" 
+          name="city" 
+          value={address.city} 
+          onChange={handleAddressChange} 
+          sx={{ minWidth: "45%" }}
+        />
+        <TextField 
+          id="state-field" 
+          label="State" 
+          variant="outlined" 
+          name="state" 
+          value={address.state} 
+          onChange={handleAddressChange} 
+          sx={{ minWidth: "45%" }}
+        />
+        <TextField 
+          id="postcode-field" 
+          label="Postcode" 
+          variant="outlined" 
+          name="postcode" 
+          value={address.postcode} 
+          onChange={handleAddressChange} 
+          sx={{ minWidth: "45%" }}
+        />
+
         <input
           type="file"
           accept=".xlsx,.tiff"
@@ -54,34 +106,18 @@ function Upload() {
           style={{ display: 'none' }}
           ref={fileInputRef}
         />
-        <h3> Location: </h3>
-        {/* Address Fields (Country/Address/City/State/Postcode) */}
-        <div className="address-field">
-          <label className="address-label">Country/Region: </label>
-          <input className="address-input" type="text" name="country" value={address.country} onChange={handleAddressChange} />
-        </div>
-        <div className="address-field">
-          <label className="address-label">Street: </label>
-          <input className="address-input" type="text" name="street" value={address.street} onChange={handleAddressChange} />
-        </div>
-        <div className="address-field">
-          <label className="address-label">City: </label>
-          <input className="address-input" type="text" name="city" value={address.city} onChange={handleAddressChange} />
-        </div>
-        <div className="address-field">
-          <label className="address-label">State/Territory: </label>
-          <input className="address-input" type="text" name="state" value={address.state} onChange={handleAddressChange} />
-        </div>
-        <div className="address-field">
-          <label className="address-label">Postcode: </label>
-          <input className="address-input" type="text" name="postcode" value={address.postcode} onChange={handleAddressChange} />
-        </div>
-        
-        {/* Upload button */}
-        <ContainedButton onClick={handleClick} label="Upload File" />
-      </div>
+
+        <Button 
+          variant="contained" 
+          onClick={handleClick}
+          sx={{ height: "2.7rem", minWidth: "45%" }}
+        >
+          Upload Files
+        </Button>
+      </Stack>
     </div>
   );
 }
 
 export default Upload;
+

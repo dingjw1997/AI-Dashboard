@@ -58,17 +58,15 @@ const Header: React.FC = () => {
           edge="start"
           color="inherit"
           aria-label="menu"
-          sx={{ mr: 2 }}
+          sx={{ mr: 1 }}
           onClick={handleLogoClick}
         >
-          <img src="/images/logo.png" alt="logo" style={{ width: '30px' }} />
+          <img src="/images/logo.png" alt="logo" style={{ width: '35px' }} />
         </IconButton>
 
         <Typography 
-          variant="h6" 
-          component="div" 
-          sx={{ flexGrow: 1, cursor: "pointer" }}
-          onClick={handleLogoClick}
+          variant="h6"
+          sx={{ flexGrow: 1 }}
         >
           Dashboard
         </Typography>
