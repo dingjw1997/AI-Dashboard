@@ -1,4 +1,3 @@
-/* eslint-disable no-lone-blocks */
 import React, { useRef, useState } from 'react';
 import { TextField, Stack, Typography, Button } from '@mui/material';
 import Header from '../../components/Header/Header';
@@ -102,6 +101,7 @@ function Upload() {
           onChange={handleFileUpload}
           style={{ display: 'none' }}
           ref={fileInputRef}
+          data-testid="file-input"
         />
 
         <Button 
