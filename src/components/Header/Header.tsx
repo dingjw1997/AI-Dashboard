@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -20,6 +21,7 @@ interface NavLink {
 
 const Header: React.FC = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const navigate = useNavigate();
 
   const navLinks: NavLink[] = [
     {
@@ -44,6 +46,10 @@ const Header: React.FC = () => {
     setAnchorEl(null);
   };
 
+  const handleLogoClick = () => {
+    navigate("/")
+  }
+
   return (
     <AppBar position="static">
       <Toolbar>
@@ -53,12 +59,20 @@ const Header: React.FC = () => {
           color="inherit"
           aria-label="menu"
           sx={{ mr: 2 }}
+          onClick={handleLogoClick}
         >
           <img src="/images/logo.png" alt="logo" style={{ width: '30px' }} />
         </IconButton>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+
+        <Typography 
+          variant="h6" 
+          component="div" 
+          sx={{ flexGrow: 1, cursor: "pointer" }}
+          onClick={handleLogoClick}
+        >
           Dashboard
         </Typography>
+
         <div>
           {navLinks.map((link, index) => (
             link.dropdown ? (
@@ -100,6 +114,7 @@ const Header: React.FC = () => {
             )
           ))}
         </div>
+
       </Toolbar>
     </AppBar>
   );
