@@ -1,10 +1,7 @@
 /* eslint-disable no-lone-blocks */
 import React, { useRef, useState } from 'react';
 import { TextField, Stack, Typography, Button } from '@mui/material';
-
-
 import Header from '../../components/Header/Header';
-import ContainedButton from '../../components/ContainedButton/ContainedButton';
 
 function Upload() {
 
