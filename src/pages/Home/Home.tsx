@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter } from 'react-router-dom';
+// import { MemoryRouter } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import './Home.css'; // Import the InteractiveMap component
 import InteractiveMap from '../Map/InteractiveMap';
