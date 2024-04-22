@@ -31,7 +31,7 @@ function InteractiveMap() {
   });
 
   return (
-    <MapContainer center={position} zoom={13} style={{ height: '1000px' }}>
+    <MapContainer center={position} zoom={13} style={{ height: '600px' }}>
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
