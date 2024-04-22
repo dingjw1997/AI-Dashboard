@@ -23,25 +23,32 @@ const theme = createTheme({
     MuiTextField: {
       styleOverrides: {
         root: {
-          backgroundColor: '#2F3136', // Use color from your theme
+          backgroundColor: '#2F3136', 
           '& label.Mui-focused': {
-            color: 'white', // This is for the label color when it is focused
+            color: 'white', 
           },
           '& .MuiOutlinedInput-root': {
             '& fieldset': {
-              borderColor: 'white', // This is for the border color
+              borderColor: 'white', 
             },
             '&:hover fieldset': {
-              borderColor: 'white', // This is for the border color when hovered
+              borderColor: 'white',
             },
             '&.Mui-focused fieldset': {
-              borderColor: 'white', // This is for the border color when the input is focused
+              borderColor: 'white', 
             },
           },
         },
       },
     },
     MuiStack: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#2F3136'
+        },
+      },
+    },
+    MuiGrid: {
       styleOverrides: {
         root: {
           backgroundColor: '#2F3136'

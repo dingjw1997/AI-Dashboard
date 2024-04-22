@@ -7,7 +7,7 @@ function Status() {
   return (
     <div>
       <Header />
-      <BasicTable />
+      <BasicTable columnsToShow={['Asset', 'No.', 'Condition', 'Location', 'Material', 'Last Inspection Date']} />
     </div> 
   );
 }

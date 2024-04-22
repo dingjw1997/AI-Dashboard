@@ -8,6 +8,8 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useNavigate } from 'react-router-dom';
 
+const defaultColumns = ['Asset', 'No.', 'Condition', 'Location', 'Material', 'Last Inspection Date'];
+
 interface RowData {
   name: string;
   number: number;
@@ -47,7 +49,7 @@ const rows: RowData[] = [
   createData('', 0, '', '', '', ''),
 ];
 
-function BasicTable() {
+function BasicTable({ columnsToShow = defaultColumns }) {
   const navigate = useNavigate();
 
   const handleRowClick = (row: RowData) => {
@@ -55,18 +57,17 @@ function BasicTable() {
     navigate(`/details/${row.number}`);
   };
   
-
   return (
     <TableContainer component={Paper} square variant="outlined">
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+      <Table aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell sx={{ fontWeight: 'bold' }}>Asset</TableCell>
-            <TableCell sx={{ fontWeight: 'bold' }} align="right">No.</TableCell>
-            <TableCell sx={{ fontWeight: 'bold' }} align="right">Condition</TableCell>
-            <TableCell sx={{ fontWeight: 'bold' }} align="right">Location</TableCell>
-            <TableCell sx={{ fontWeight: 'bold' }} align="right">Material</TableCell>
-            <TableCell sx={{ fontWeight: 'bold' }} align="right">Last Inspection Date</TableCell>
+            {columnsToShow.includes('Asset') && <TableCell sx={{ fontWeight: 'bold' }}>Asset</TableCell>}
+            {columnsToShow.includes('No.') && <TableCell sx={{ fontWeight: 'bold' }} align="right">No.</TableCell>}
+            {columnsToShow.includes('Condition') && <TableCell sx={{ fontWeight: 'bold' }} align="right">Condition</TableCell>}
+            {columnsToShow.includes('Location') && <TableCell sx={{ fontWeight: 'bold' }} align="right">Location</TableCell>}
+            {columnsToShow.includes('Material') && <TableCell sx={{ fontWeight: 'bold' }} align="right">Material</TableCell>}
+            {columnsToShow.includes('Last Inspection Date') && <TableCell sx={{ fontWeight: 'bold' }} align="right">Last Inspection Date</TableCell>}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -75,18 +76,18 @@ function BasicTable() {
               key={row.name || index}
               sx={{
                 '&:last-child td, &:last-child th': { border: 0 },
-                '&:hover': { backgroundColor: 'rgba(0, 0, 0, 0.04)' }, 
+                '&:hover': { backgroundColor: 'rgba(0, 0, 0, 0.04)' },
                 cursor: 'pointer'
               }}
-              hover 
+              hover
               onClick={() => handleRowClick(row)}
             >
-              <TableCell component="th" scope="row">{row.name}</TableCell>
-              <TableCell align="right">{row.number}</TableCell>
-              <TableCell align="right">{row.condition}</TableCell>
-              <TableCell align="right">{row.location}</TableCell>
-              <TableCell align="right">{row.material}</TableCell>
-              <TableCell align="right">{row.lastInspectionDate}</TableCell>
+              {columnsToShow.includes('Asset') && <TableCell component="th" scope="row">{row.name}</TableCell>}
+              {columnsToShow.includes('No.') && <TableCell align="right">{row.number}</TableCell>}
+              {columnsToShow.includes('Condition') && <TableCell align="right">{row.condition}</TableCell>}
+              {columnsToShow.includes('Location') && <TableCell align="right">{row.location}</TableCell>}
+              {columnsToShow.includes('Material') && <TableCell align="right">{row.material}</TableCell>}
+              {columnsToShow.includes('Last Inspection Date') && <TableCell align="right">{row.lastInspectionDate}</TableCell>}
             </TableRow>
           ))}
         </TableBody>
