@@ -1,5 +1,4 @@
 import React from 'react';
-import './Home.css';
 import Header from '../../components/Header/Header';
 import InteractiveMap from '../Map/InteractiveMap';
 import BasicTable from '../../components/BasicTable/BasicTable';
