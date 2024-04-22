@@ -1,14 +1,18 @@
 import React from 'react';
+import { Grow } from '@mui/material';
 import Header from '../../components/Header/Header';
 import BasicTable from '../../components/BasicTable/BasicTable';
 
 function Status() {
-
   return (
     <div>
       <Header />
-      <BasicTable columnsToShow={['Asset', 'No.', 'Condition', 'Location', 'Material', 'Last Inspection Date']} />
-    </div> 
+      <Grow in timeout={600}>
+        <div>
+          <BasicTable columnsToShow={['Asset', 'No.', 'Condition', 'Location', 'Material', 'Last Inspection Date']} />
+        </div>
+      </Grow>
+    </div>
   );
 }
 
