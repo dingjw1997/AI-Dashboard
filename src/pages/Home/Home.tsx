@@ -1,26 +1,29 @@
 import React from 'react';
 import { Typography, Grid, Grow, Paper } from '@mui/material';
 import Header from '../../components/Header/Header';
-import InteractiveMap from '../Map/InteractiveMap';
 import BasicTable from '../../components/BasicTable/BasicTable';
+import GoogleMap from '../../components/GoogleMap/GoogleMap'; // Make sure this import is correct
+
+const gridItemStyles = {
+  overflow: 'auto',
+  borderRadius: '10px',
+  backgroundColor: '#2F3136',
+  padding: 2,
+  transition: 'transform .3s ease, box-shadow .3s ease',
+  '&:hover': {
+    transform: 'scale(1.02)', 
+    boxShadow: '0 4px 20px 0 rgba(0,0,0,0.15)', 
+  },
+  '::webkit-scrollbar': { display: 'none' },
+  scrollbarWidth: 'none',
+  maxHeight: '500px',
+  boxShadow: '0 2px 10px 0 rgba(0,0,0,0.1)'
+};
+
+const center = { lat: -31.953512, lng: 115.857048 }; // Perth, WA Coordinates
+const zoom = 12; 
 
 function Home() {
-  const gridItemStyles = {
-    overflow: 'auto',
-    borderRadius: '10px',
-    backgroundColor: '#2F3136',
-    padding: 2,
-    transition: 'transform .3s ease, box-shadow .3s ease',
-    '&:hover': {
-      transform: 'scale(1.02)', 
-      boxShadow: '0 4px 20px 0 rgba(0,0,0,0.15)', 
-    },
-    '::webkit-scrollbar': { display: 'none' },
-    scrollbarWidth: 'none',
-    maxHeight: '500px',
-    boxShadow: '0 2px 10px 0 rgba(0,0,0,0.1)'
-  };
-
   return (
     <div>
       <Header />
@@ -55,7 +58,7 @@ function Home() {
           <Grow in timeout={900}>
             <Paper sx={{ ...gridItemStyles, maxHeight: '700px' }}>
               <Typography variant="h4" component="h4" textAlign="center" gutterBottom>Map</Typography>
-              <InteractiveMap />
+              <GoogleMap center={center} zoom={zoom} />
             </Paper>
           </Grow>
         </Grid>
@@ -65,3 +68,5 @@ function Home() {
 }
 
 export default Home;
+
+

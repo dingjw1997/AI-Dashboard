@@ -5,13 +5,13 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/database';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCmawz87VJsvhZRWZlIVqnhRdDwZ0X3yKE",
-  authDomain: "reactfirebase-3e370.firebaseapp.com",
-  databaseURL: "https://reactfirebase-3e370-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "reactfirebase-3e370",
-  storageBucket: "reactfirebase-3e370.appspot.com",
-  messagingSenderId: "1080268037849",
-  appId: "1:1080268037849:web:b9befaffc08e90400c28c8"
+  apiKey: "AIzaSyCAsD-i96MvX_5hYspEVP4j3TczFdCHMYE",
+  authDomain: "interactive-dashboard-66abf.firebaseapp.com",
+  databaseURL: "https://interactive-dashboard-66abf-default-rtdb.asia-southeast1.firebasedatabase.app/",
+  projectId: "interactive-dashboard-66abf",
+  storageBucket: "interactive-dashboard-66abf.appspot.com",
+  messagingSenderId: "540835068994",
+  appId: "1:540835068994:web:bf6848691b4c238c48c1db"
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -25,7 +25,8 @@ function Upload() {
     state: '',
     postcode: ''
   });
-  
+  const [submitted, setSubmitted] = useState(false);
+
   const handleAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setAddress(prevState => ({
@@ -60,6 +61,21 @@ function Upload() {
       dbRef.push(dataToSend);
       console.log('Data Uploaded:', dataToSend);
       console.log('File Uploaded:', file);
+
+      // Set submitted to true
+      setSubmitted(true);
+
+      // Clear the form after 3 seconds
+      setTimeout(() => {
+        setAddress({
+          country:'',
+          street: '',
+          city: '',
+          state: '',
+          postcode: ''
+        });
+        setSubmitted(false);
+      }, 3000);
     }
   };
 
@@ -105,6 +121,7 @@ function Upload() {
           onChange={handleAddressChange} 
           sx={{ minWidth: "45%" }}
         />
+
         <TextField 
           id="postcode-field" 
           label="Postcode" 
@@ -123,6 +140,8 @@ function Upload() {
           ref={fileInputRef}
           data-testid="file-input"
         />
+
+        {submitted && <Typography variant="h6">Submitted</Typography>}
 
         <Button 
           variant="contained" 
