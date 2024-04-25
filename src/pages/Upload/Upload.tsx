@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { TextField, Stack, Typography, Button } from '@mui/material';
+import { TextField, MenuItem, FormControl, InputLabel, Stack, Typography, Button, Slide, Zoom, Select, SelectChangeEvent } from '@mui/material';
 import Header from '../../components/Header/Header';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/database';
@@ -18,14 +18,28 @@ firebase.initializeApp(firebaseConfig);
 
 function Upload() {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  // Asset Info 
+  const [assetInfo, setAssetInfo] = useState({
+    assetName: '',
+    assetMaterialType: ''
+  });
+  // Address Info
   const [address, setAddress] = useState({
-    country:'',
+    country: '',
     street: '',
     city: '',
     state: '',
     postcode: ''
   });
-  const [submitted, setSubmitted] = useState(false);
+
+  const handleAssetInfoChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
+    const { name, value } = e.target as HTMLInputElement; // Use type assertion to ensure it's an input element
+    setAssetInfo(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
+  
 
   const handleAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -44,38 +58,12 @@ function Upload() {
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files && event.target.files[0];
     if (file) {
-      // Save file information to the database
-      const fileData = {
-        fileName: file.name,
-        fileType: file.type,
-        fileSize: file.size
-      };
-
-      // Include address information
-      const dataToSend = {
-        address,
-        file: fileData
-      };
-
-      const dbRef = firebase.database().ref('uploads');
-      dbRef.push(dataToSend);
-      console.log('Data Uploaded:', dataToSend);
-      console.log('File Uploaded:', file);
-
-      // Set submitted to true
-      setSubmitted(true);
-
-      // Clear the form after 3 seconds
-      setTimeout(() => {
-        setAddress({
-          country:'',
-          street: '',
-          city: '',
-          state: '',
-          postcode: ''
-        });
-        setSubmitted(false);
-      }, 3000);
+      if (file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
+          file.type === 'image/tif') {
+        console.log('File Uploaded:', file);
+      } else {
+        alert('Please upload only .xlsx or .tif files.');
+      }
     }
   };
 
@@ -83,73 +71,112 @@ function Upload() {
     <div>
       <Header />
       <Stack spacing={2} pt={2} px={3} alignItems="center" sx={{ height: "100vh" }}>
+        
+        <Typography variant="h4" component="h4">Asset Information</Typography>
+        <Slide direction="up" in={true} mountOnEnter unmountOnExit>
+          {/* Asset Name */}
+          <TextField 
+            id="asset-name-field" 
+            label="Asset Name" 
+            variant="outlined" 
+            name="assetName" 
+            value={assetInfo.assetName} 
+            onChange={handleAssetInfoChange} 
+            sx={{ minWidth: "45%" }}
+          />
+        </Slide>
+        <Slide direction="up" in={true} mountOnEnter unmountOnExit>
+          {/* Asset Material Type */}
+          <FormControl variant="outlined" sx={{ minWidth: "45%" }}>
+            <InputLabel id="asset-material-type-label">Asset Material Type</InputLabel>
+            <Select
+              labelId="asset-material-type-label"
+              id="asset-material-type-select"
+              value={assetInfo.assetMaterialType}
+              onChange={handleAssetInfoChange}
+              label="Asset Material Type"
+            >
+              <MenuItem value="Concrete">Concrete</MenuItem>
+              <MenuItem value="Wood">Wood</MenuItem>
+              <MenuItem value="Asphalt">Asphalt</MenuItem>
+            </Select>
+          </FormControl>
+        </Slide>
+
         <Typography variant="h4" component="h4">Location</Typography>
-
-        <TextField 
-          id="country-field" 
-          label="Country" 
-          variant="outlined" 
-          name="country" 
-          value={address.country} 
-          onChange={handleAddressChange} 
-          sx={{ minWidth: "45%" }}
-        />
-        <TextField 
-          id="street-field" 
-          label="Street" 
-          variant="outlined" 
-          name="street" 
-          value={address.street} 
-          onChange={handleAddressChange} 
-          sx={{ minWidth: "45%" }}
-        />
-        <TextField 
-          id="city-field" 
-          label="City" 
-          variant="outlined" 
-          name="city" 
-          value={address.city} 
-          onChange={handleAddressChange} 
-          sx={{ minWidth: "45%" }}
-        />
-        <TextField 
-          id="state-field" 
-          label="State" 
-          variant="outlined" 
-          name="state" 
-          value={address.state} 
-          onChange={handleAddressChange} 
-          sx={{ minWidth: "45%" }}
-        />
-
-        <TextField 
-          id="postcode-field" 
-          label="Postcode" 
-          variant="outlined" 
-          name="postcode" 
-          value={address.postcode} 
-          onChange={handleAddressChange} 
-          sx={{ minWidth: "45%" }}
-        />
+        <Slide direction="up" in={true} mountOnEnter unmountOnExit>
+          <TextField 
+            id="country-field" 
+            label="Country" 
+            variant="outlined" 
+            name="country" 
+            value={address.country} 
+            onChange={handleAddressChange} 
+            sx={{ minWidth: "45%" }}
+          />
+        </Slide>
+        <Slide direction="up" in={true} mountOnEnter unmountOnExit>
+          <TextField 
+            id="street-field" 
+            label="Street" 
+            variant="outlined" 
+            name="street" 
+            value={address.street} 
+            onChange={handleAddressChange} 
+            sx={{ minWidth: "45%" }}
+          />
+        </Slide>
+        <Slide direction="up" in={true} mountOnEnter unmountOnExit>
+          <TextField 
+            id="city-field" 
+            label="City" 
+            variant="outlined" 
+            name="city" 
+            value={address.city} 
+            onChange={handleAddressChange} 
+            sx={{ minWidth: "45%" }}
+          />
+        </Slide>
+        <Slide direction="up" in={true} mountOnEnter unmountOnExit>
+          <TextField 
+            id="state-field" 
+            label="State" 
+            variant="outlined" 
+            name="state" 
+            value={address.state} 
+            onChange={handleAddressChange} 
+            sx={{ minWidth: "45%" }}
+          />
+        </Slide>
+        <Slide direction="up" in={true} mountOnEnter unmountOnExit>
+          <TextField 
+            id="postcode-field" 
+            label="Postcode" 
+            variant="outlined" 
+            name="postcode" 
+            value={address.postcode} 
+            onChange={handleAddressChange} 
+            sx={{ minWidth: "45%" }}
+          />
+        </Slide>
 
         <input
           type="file"
-          accept=".xlsx,.tiff"
+          accept=".xlsx,.tif"
           onChange={handleFileUpload}
           style={{ display: 'none' }}
           ref={fileInputRef}
-          data-testid="file-input"
         />
 
-        {submitted && <Typography variant="h6">Submitted</Typography>}
-
-        <Button 
-          variant="contained" 
-          onClick={handleClick}
-          sx={{ height: "2.7rem", minWidth: "45%" }}
-        >
-          Upload Files
-        </Button>
+        <Zoom in={true}>
+          <Button 
+            variant="contained" 
+            onClick={handleClick}
+            sx={{ height: "2.7rem", minWidth: "45%" }}
+          >
+            Upload Files
+          </Button>
+        </Zoom>
       </Stack>
     </div>
   );
