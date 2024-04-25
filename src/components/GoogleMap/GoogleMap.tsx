@@ -11,7 +11,7 @@ declare const google: any;
 const GoogleMap: React.FC<GoogleMapProps> = ({ center, zoom }) => {
     useEffect(() => {
         const script = document.createElement('script');
-        script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyAqorFZzemzb5NTmjiIs-lecUivC9hxibs&libraries=places`;
+        script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBR5WuohCvM5HEN1Wzf5_5AatxhD4q7zlI&libraries=places`;
         script.async = true;
         document.body.appendChild(script);
     
