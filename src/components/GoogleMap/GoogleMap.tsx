@@ -16,7 +16,7 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ center, zoom }) => {
         document.body.appendChild(script);
     
         script.onload = () => {
-            const map = new google.maps.Map(document.getElementById('map'), {
+            new google.maps.Map(document.getElementById('map'), {
                 center: center,
                 zoom: zoom,
             });
@@ -27,7 +27,7 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ center, zoom }) => {
         };
     }, [center, zoom]);
     
-    return <div id="map"> </div>;
+    return <div id="map" style={{ width: '100%', height: '100%', minHeight: '650px' }}> </div>;
 };
 
 export default GoogleMap;

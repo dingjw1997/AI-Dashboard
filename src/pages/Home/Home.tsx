@@ -2,10 +2,10 @@ import React from 'react';
 import { Typography, Grid, Grow, Paper } from '@mui/material';
 import Header from '../../components/Header/Header';
 import BasicTable from '../../components/BasicTable/BasicTable';
-import GoogleMap from '../../components/GoogleMap/GoogleMap'; // Make sure this import is correct
+import GoogleMap from '../../components/GoogleMap/GoogleMap';
 
 const gridItemStyles = {
-  overflow: 'auto',
+  overflowX: 'hidden',
   borderRadius: '10px',
   backgroundColor: '#2F3136',
   padding: 2,
@@ -56,7 +56,7 @@ function Home() {
         
         <Grid item xs={10} mt={5}>
           <Grow in timeout={900}>
-            <Paper sx={{ ...gridItemStyles, maxHeight: '700px' }}>
+            <Paper sx={{ ...gridItemStyles, minHeight: '700px', overflowY: 'hidden' }}>
               <Typography variant="h4" component="h4" textAlign="center" gutterBottom>Map</Typography>
               <GoogleMap center={center} zoom={zoom} />
             </Paper>
