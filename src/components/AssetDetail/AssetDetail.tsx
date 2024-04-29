@@ -1,8 +1,43 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import Header from '../Header/Header';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  ArcElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+
+import { Line } from 'react-chartjs-2';
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  ArcElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 const AssetDetail = () => {
-  const { number } = useParams();
+
+  const lineData1 = {
+    labels: ['January', 'February', 'March', 'April', 'May'],
+    datasets: [{
+      label: 'Demo Line Plot',
+      data: [65, 59, 80, 81, 56],
+      fill: false,
+      backgroundColor: 'rgb(75, 192, 192)',
+      borderColor: 'rgba(75, 192, 192, 0.2)',
+    }],
+  };
+
   
   let assetDetails;
 
@@ -16,10 +51,16 @@ const AssetDetail = () => {
   
   return (
     <div>
-      <h2>Asset Details</h2>
-      {/* Check if assetDetails is not null before trying to access its properties */}
-      <p>Asset Number: {assetDetails ? assetDetails.number : 'No data available'}</p>
-      {/* Display other details conditionally or handle the null case appropriately */}
+      <Header />
+      <div>
+        <div style={{height: '400px'}}>
+          <Line data={lineData1} />
+        </div>
+        <div style={{height: '400px'}}>
+          <h2>Asset Details</h2>
+          <p>Asset Number: {assetDetails ? assetDetails.number : 'No data available'}</p>
+        </div>
+      </div>
     </div>
   );
 };
