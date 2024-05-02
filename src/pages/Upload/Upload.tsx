@@ -20,19 +20,17 @@ firebase.initializeApp(firebaseConfig);
 
 function Upload() {
   const fileInputRef = useRef<HTMLInputElement>(null);
-  // Asset Info 
+
   const [assetInfo, setAssetInfo] = useState({
     assetName: '',
     assetMaterialType: ''
   });
 
-  // Relevant Dates
   const [dateInfo, setDateInfo] = useState({
     dateUploaded: '',
     dateLastInspected: ''
   });
 
-  // Address Info
   const [address, setAddress] = useState({
     country: '',
     street: '',
@@ -40,20 +38,20 @@ function Upload() {
     state: '',
     postcode: ''
   });
-  // Inspection Notes
+
   const [inspectionNotes, setInspectionNotes] = useState({
     inspectionNotes: ''
   });
 
-  /*===========================================================================================================================*/
-
-  const handleAssetInfoChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
-    const { name, value } = e.target as HTMLInputElement; // Use type assertion to ensure it's an input element
+  const handleAssetInfoChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
+    const name = event.target.name;
+    const value = event.target.value;
     setAssetInfo(prevState => ({
       ...prevState,
       [name]: value
     }));
   };
+  
   
 
   const handleAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -90,8 +88,6 @@ function Upload() {
     }
   };
 
-  /*===========================================================================================================================*/
-
   return (
     <div>
       <Header />
@@ -99,7 +95,6 @@ function Upload() {
         
         <Typography variant="h4" component="h4">Asset Information</Typography>
         <Slide direction="up" in={true} mountOnEnter unmountOnExit>
-          {/* Asset Name */}
           <TextField 
             id="asset-name-field" 
             label="Asset Name" 
@@ -110,13 +105,14 @@ function Upload() {
             sx={{ minWidth: "45%" }}
           />
         </Slide>
+
         <Slide direction="up" in={true} mountOnEnter unmountOnExit>
-          {/* Asset Material Type */}
           <FormControl variant="outlined" sx={{ minWidth: "45%" }}>
             <InputLabel id="asset-material-type-label">Asset Material Type</InputLabel>
             <Select
               labelId="asset-material-type-label"
               id="asset-material-type-select"
+              name="assetMaterialType"  
               value={assetInfo.assetMaterialType}
               onChange={handleAssetInfoChange}
               label="Asset Material Type"
@@ -127,6 +123,7 @@ function Upload() {
             </Select>
           </FormControl>
         </Slide>
+
         <Typography variant="h4" component="h4">Location</Typography>
         <Slide direction="up" in={true} mountOnEnter unmountOnExit>
           <TextField 
@@ -139,6 +136,7 @@ function Upload() {
             sx={{ minWidth: "45%" }}
           />
         </Slide>
+
         <Slide direction="up" in={true} mountOnEnter unmountOnExit>
           <TextField 
             id="state-field" 
@@ -150,6 +148,7 @@ function Upload() {
             sx={{ minWidth: "45%" }}
           />
         </Slide>
+
         <Slide direction="up" in={true} mountOnEnter unmountOnExit>
           <TextField 
             id="city-field" 
@@ -161,6 +160,7 @@ function Upload() {
             sx={{ minWidth: "45%" }}
           />
         </Slide>
+
         <Slide direction="up" in={true} mountOnEnter unmountOnExit>
           <TextField 
             id="street-field" 
@@ -172,6 +172,7 @@ function Upload() {
             sx={{ minWidth: "45%" }}
           />
         </Slide>
+
         <Slide direction="up" in={true} mountOnEnter unmountOnExit>
           <TextField 
             id="postcode-field" 
@@ -183,6 +184,7 @@ function Upload() {
             sx={{ minWidth: "45%" }}
           />
         </Slide>
+
         <Typography variant="h4" component="h4">Asset Information</Typography>
         <Slide direction="up" in={true} mountOnEnter unmountOnExit>
           <TextField 
