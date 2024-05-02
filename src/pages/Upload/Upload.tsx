@@ -87,7 +87,7 @@ function Upload() {
   return (
     <div>
       <Header />
-      <Stack spacing={2} pt={2} px={3} alignItems="center" sx={{ height: "100vh" }}>
+      <Stack spacing={2} py={2} px={3} alignItems="center" sx={{ height: "auto" }}>
         
         <Typography variant="h4" component="h4">Asset Details</Typography>
         <Slide direction="up" in={true} mountOnEnter unmountOnExit>
