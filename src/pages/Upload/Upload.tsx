@@ -204,7 +204,7 @@ function Upload() {
             variant="outlined" 
             name="inspectionNotes" 
             multiline
-            rows={4}  
+            rows={7}  
             value={inspectionNotes.inspectionNotes} 
             onChange={handleInspectionNotesChange} 
             sx={{ minWidth: "45%" }} 
