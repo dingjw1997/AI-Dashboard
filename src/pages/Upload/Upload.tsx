@@ -16,8 +16,6 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-/*===========================================================================================================================*/
-
 function Upload() {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -51,8 +49,6 @@ function Upload() {
       [name]: value
     }));
   };
-  
-  
 
   const handleAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -93,7 +89,7 @@ function Upload() {
       <Header />
       <Stack spacing={2} pt={2} px={3} alignItems="center" sx={{ height: "100vh" }}>
         
-        <Typography variant="h4" component="h4">Asset Information</Typography>
+        <Typography variant="h4" component="h4">Asset Details</Typography>
         <Slide direction="up" in={true} mountOnEnter unmountOnExit>
           <TextField 
             id="asset-name-field" 
@@ -122,6 +118,21 @@ function Upload() {
               <MenuItem value="Asphalt">Asphalt</MenuItem>
             </Select>
           </FormControl>
+        </Slide>
+
+        <Slide direction="up" in={true} mountOnEnter unmountOnExit>
+          <TextField
+            id="last-inspection-date-field"
+            label="Last Inspection Date"
+            type="date"
+            name="dateLastInspected"
+            value={dateInfo.dateLastInspected}
+            onChange={(e) => setDateInfo({ ...dateInfo, dateLastInspected: e.target.value })}
+            sx={{ minWidth: "45%" }}
+            InputLabelProps={{
+              shrink: true, 
+            }}
+          />
         </Slide>
 
         <Typography variant="h4" component="h4">Location</Typography>
@@ -185,16 +196,18 @@ function Upload() {
           />
         </Slide>
 
-        <Typography variant="h4" component="h4">Asset Information</Typography>
+        <Typography variant="h4" component="h4">Optional</Typography>
         <Slide direction="up" in={true} mountOnEnter unmountOnExit>
           <TextField 
             id="inspectionNotes-field" 
             label="Inspection Notes" 
             variant="outlined" 
             name="inspectionNotes" 
+            multiline
+            rows={4}  
             value={inspectionNotes.inspectionNotes} 
             onChange={handleInspectionNotesChange} 
-            sx={{ minWidth: "45%" }}
+            sx={{ minWidth: "45%" }} 
           />
         </Slide>
 
