@@ -8,7 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useNavigate } from 'react-router-dom';
 
-const defaultColumns = ['Asset', 'No.', 'Condition', 'Location', 'Material', 'Last Inspection Date'];
+const defaultColumns = ['Asset', 'No.', 'Condition', 'Location', 'Material', 'Last Inspection Date', 'Last Upload Date'];
 
 interface RowData {
   name: string;
@@ -17,6 +17,7 @@ interface RowData {
   location: string;
   material: string;
   lastInspectionDate: string;
+  lastUploadDate: string;
 }
 
 function createData(
@@ -26,27 +27,25 @@ function createData(
   location: string,
   material: string,
   lastInspectionDate: string,
+  lastUploadDate: string,
 ): RowData { 
-  return { name, number, condition, location, material, lastInspectionDate };
+  return { name, number, condition, location, material, lastInspectionDate, lastUploadDate };
 }
 
 const rows: RowData[] = [
-  createData('Matagarup Bridge', 101, 'Good', 'East Perth', 'Steel', '2023-08-15'),
-  createData('Perth Railway Station', 202, 'Requires Inspection', 'Perth CBD', 'Brick and Steel', '2023-06-22'),
-  createData('Kwinana Freeway Overpass', 303, 'Poor', 'South Perth', 'Concrete', '2023-04-30'),
-  createData('Elizabeth Quay Waterfront', 404, 'Good', 'Elizabeth Quay', 'Concrete and Steel', '2023-09-01'),
-  createData('Jandakot Airport Runway', 505, 'Poor', 'Jandakot', 'Asphalt', '2022-12-05'),
-  createData('', 0, '', '', '', ''),
-  createData('', 0, '', '', '', ''),
-  createData('', 0, '', '', '', ''),
-  createData('', 0, '', '', '', ''),
-  createData('', 0, '', '', '', ''),
-  createData('', 0, '', '', '', ''),
-  createData('', 0, '', '', '', ''),
-  createData('', 0, '', '', '', ''),
-  createData('', 0, '', '', '', ''),
-  createData('', 0, '', '', '', ''),
-  createData('', 0, '', '', '', ''),
+  createData('Matagarup Bridge', 101, 'Good', 'East Perth', 'Steel', '2023-08-15', '2024-01-04'),
+  createData('Perth Railway Station', 202, 'Requires Inspection', 'Perth CBD', 'Brick and Steel', '2023-06-22', '2023-08-01'),
+  createData('Kwinana Freeway Overpass', 303, 'Poor', 'South Perth', 'Concrete', '2023-04-30', '2024-02-15'),
+  createData('Elizabeth Quay Waterfront', 404, 'Good', 'Elizabeth Quay', 'Concrete and Steel', '2022-07-01', '2023-03-27'),
+  createData('Jandakot Airport Runway', 505, 'Poor', 'Jandakot', 'Asphalt', '2022-12-05', '2023-01-13'),
+  createData('', 0, '', '', '', '', ''),
+  createData('', 0, '', '', '', '', ''),
+  createData('', 0, '', '', '', '', ''),
+  createData('', 0, '', '', '', '', ''),
+  createData('', 0, '', '', '', '', ''),
+  createData('', 0, '', '', '', '', ''),
+  createData('', 0, '', '', '', '', ''),
+  createData('', 0, '', '', '', '', ''),
 ];
 
 function BasicTable({ columnsToShow = defaultColumns }) {
@@ -68,6 +67,7 @@ function BasicTable({ columnsToShow = defaultColumns }) {
             {columnsToShow.includes('Location') && <TableCell sx={{ fontWeight: 'bold' }} align="right">Location</TableCell>}
             {columnsToShow.includes('Material') && <TableCell sx={{ fontWeight: 'bold' }} align="right">Material</TableCell>}
             {columnsToShow.includes('Last Inspection Date') && <TableCell sx={{ fontWeight: 'bold' }} align="right">Last Inspection Date</TableCell>}
+            {columnsToShow.includes('Last Upload Date') && <TableCell sx={{ fontWeight: 'bold' }} align="right">Last Upload Date</TableCell>}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -88,6 +88,7 @@ function BasicTable({ columnsToShow = defaultColumns }) {
               {columnsToShow.includes('Location') && <TableCell align="right">{row.location}</TableCell>}
               {columnsToShow.includes('Material') && <TableCell align="right">{row.material}</TableCell>}
               {columnsToShow.includes('Last Inspection Date') && <TableCell align="right">{row.lastInspectionDate}</TableCell>}
+              {columnsToShow.includes('Last Upload Date') && <TableCell align="right">{row.lastUploadDate}</TableCell>}
             </TableRow>
           ))}
         </TableBody>
