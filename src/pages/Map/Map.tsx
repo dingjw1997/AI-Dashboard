@@ -11,9 +11,9 @@ const Map: React.FC = () => { // Map.tsx constant values for GoogleMap
   return (
     <div>
       <Header />
-      <Grid item xs={10}>
+      <Grid item xs={10} height={'100vh'}>
         <Grow in timeout={900}>
-          <Paper sx={{height: 'auto', overflowY: 'hidden' }}>
+          <Paper sx={{height: '100%', overflowY: 'hidden' }}>
             <GoogleMap center={center} zoom={zoom} />
           </Paper>
         </Grow>

@@ -9,7 +9,7 @@ function Status() {
       <Header />
       <Grow in timeout={600}>
         <div>
-          <BasicTable columnsToShow={['Asset', 'No.', 'Condition', 'Location', 'Material', 'Last Inspection Date']} />
+          <BasicTable columnsToShow={['Asset', 'No.', 'Condition', 'Location', 'Material', 'Last Inspection Date', 'Last Upload Date']} />
         </div>
       </Grow>
     </div>
