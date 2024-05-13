@@ -83,7 +83,7 @@ function Home() {
           <Grow in timeout={700}>
             <Paper sx={gridItemStyles}>
               <Typography variant="h4" component="h4" textAlign="center" gutterBottom>Status</Typography>
-              <div style={{ maxWidth: "100%", overflowX: "auto" }}>
+              <div style={{ maxWidth: "100%", overflowX: "hidden" }}>
                 <BasicTable columnsToShow={['Asset', 'No.', 'Condition', 'Location']} />
               </div>
             </Paper>

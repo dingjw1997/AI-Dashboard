@@ -8,7 +8,7 @@ function Status() {
     <div>
       <Header />
       <Grow in timeout={600}>
-        <div>
+        <div style={{overflowX: "hidden"}}>
           <BasicTable columnsToShow={['Asset', 'No.', 'Condition', 'Location', 'Material', 'Last Inspection Date', 'Last Upload Date']} />
         </div>
       </Grow>
