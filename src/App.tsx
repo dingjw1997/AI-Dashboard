@@ -9,7 +9,7 @@ import Home from './pages/Home/Home';
 import Alerts from './pages/Alerts/Alerts';
 import Upload from './pages/Upload/Upload';
 import Status from './pages/Status/Status';
-import AssetDetail from './components/AssetDetail/AssetDetail'; // Assuming AssetDetail is within the Status page directory
+import AssetDetail from './components/AssetDetail/AssetDetail';
 import Map from './pages/Map/Map';
 
 function App() {

@@ -1,11 +1,11 @@
 import React from 'react';
-import { Typography, Grid, Grow, Paper } from '@mui/material';
+import { Card, CardActionArea, CardContent, Stack, Typography, Grid, Grow, Paper } from '@mui/material';
 import Header from '../../components/Header/Header';
 import BasicTable from '../../components/BasicTable/BasicTable';
-import GoogleMap from '../../components/GoogleMap/GoogleMap'; // Make sure this import is correct
+import GoogleMap from '../../components/GoogleMap/GoogleMap';
 
 const gridItemStyles = {
-  overflow: 'auto',
+  overflowX: 'hidden',
   borderRadius: '10px',
   backgroundColor: '#2F3136',
   padding: 2,
@@ -32,13 +32,49 @@ function Home() {
         <Grid item xs={5}>
           <Grow in timeout={500}>
             <Paper sx={gridItemStyles}>
-              <Typography variant="h4" component="h4" textAlign="center" gutterBottom>Alerts</Typography>
-              <ul>
-                <li><a href="/zone/1">Zone 1</a></li>
-                <li><a href="/zone/2">Zone 2</a></li>
-                <li><a href="/zone/3">Zone 3</a></li>
-                <li><a href="/zone/4">Zone 4</a></li>
-              </ul>
+            <Typography variant="h4" component="h4" textAlign="center" gutterBottom>Alerts</Typography>
+            <Stack direction="column" spacing={2} sx={gridItemStyles}>
+              <Card variant="outlined">
+                <CardActionArea href="/zone/1">
+                  <CardContent>
+                    <Typography variant="h5" component="h2">Zone 1</Typography>
+                    <Typography variant="body2" color="textSecondary">Details about the alert...</Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+              <Card variant="outlined">
+                <CardActionArea href="/zone/2">
+                  <CardContent>
+                    <Typography variant="h5" component="h2">Zone 2</Typography>
+                    <Typography variant="body2" color="textSecondary">Details about the alert...</Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+              <Card variant="outlined">
+                <CardActionArea href="/zone/3">
+                  <CardContent>
+                    <Typography variant="h5" component="h2">Zone 3</Typography>
+                    <Typography variant="body2" color="textSecondary">Details about the alert...</Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+              <Card variant="outlined">
+                <CardActionArea href="/zone/4">
+                  <CardContent>
+                    <Typography variant="h5" component="h2">Zone 4</Typography>
+                    <Typography variant="body2" color="textSecondary">Details about the alert...</Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+              <Card variant="outlined">
+                <CardActionArea href="/zone/5">
+                  <CardContent>
+                    <Typography variant="h5" component="h2">Zone 5</Typography>
+                    <Typography variant="body2" color="textSecondary">Details about the alert...</Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            </Stack>
             </Paper>
           </Grow>
         </Grid>
@@ -47,7 +83,7 @@ function Home() {
           <Grow in timeout={700}>
             <Paper sx={gridItemStyles}>
               <Typography variant="h4" component="h4" textAlign="center" gutterBottom>Status</Typography>
-              <div style={{ maxWidth: "100%", overflowX: "auto" }}>
+              <div style={{ maxWidth: "100%", overflowX: "hidden" }}>
                 <BasicTable columnsToShow={['Asset', 'No.', 'Condition', 'Location']} />
               </div>
             </Paper>
@@ -56,7 +92,7 @@ function Home() {
         
         <Grid item xs={10} mt={5}>
           <Grow in timeout={900}>
-            <Paper sx={{ ...gridItemStyles, maxHeight: '700px' }}>
+            <Paper sx={{ ...gridItemStyles, minHeight: '700px', overflowY: 'hidden' }}>
               <Typography variant="h4" component="h4" textAlign="center" gutterBottom>Map</Typography>
               <GoogleMap center={center} zoom={zoom} />
             </Paper>

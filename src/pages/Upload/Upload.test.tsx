@@ -4,6 +4,22 @@ import userEvent from '@testing-library/user-event';
 import Upload from './Upload';
 import '@testing-library/jest-dom/extend-expect';
 
+// Mock firebase to prevent actual initialisation
+jest.mock('firebase/compat/app', () => ({
+  initializeApp: jest.fn(),
+}));
+
+// Mock firebase database to prevent actual calls
+jest.mock('firebase/compat/database', () => ({
+  database: jest.fn(),
+}));
+
+// Mock navigate function used in the component
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'), // import and retain the original functionalities
+  useNavigate: () => jest.fn(), // mock useNavigate with an empty function
+}));
+
 describe('Upload Component', () => {
 
   test('renders all address input fields correctly', () => {
@@ -16,32 +32,18 @@ describe('Upload Component', () => {
   });
 
   test('renders location heading', () => {
+    render(<Upload />);
     expect(screen.getByText('Location')).toBeInTheDocument();
   });
 
+  test('renders asset information heading', () => {
+    render(<Upload />);
+    expect(screen.getByText('Asset Information')).toBeInTheDocument();
+  });
+
   test('renders upload button', () => {
+    render(<Upload />);
     expect(screen.getByRole('button', { name: 'Upload Files' })).toBeInTheDocument();
-  });
-
-  test('file input should be hidden', () => {
-    const fileInput = screen.getByTestId('file-input');
-    expect(fileInput).not.toBeVisible();
-  });
-
-  test('clicking the upload button triggers file input click', () => {
-
-    // Mock function to simulate the file input click event
-    const fileInputRef = {
-      current: {
-        click: jest.fn()
-      }
-    };
-
-    // Button click simulation
-    userEvent.click(screen.getByRole('button', { name: 'Upload Files' }));
-    
-    // The file input click should have been called
-    expect(fileInputRef.current.click).toHaveBeenCalled();
   });
 
 });

@@ -1,7 +1,8 @@
 import React from 'react';
 import Header from '../../components/Header/Header';
 import GoogleMap from '../../components/GoogleMap/GoogleMap';
-import './InteractiveMap.css'
+import './Map.css'
+import { Grid, Grow, Paper } from '@mui/material';
 
 const Map: React.FC = () => { // Map.tsx constant values for GoogleMap
   const center = { lat: -31.953512, lng: 115.857048 }; // Perth, WA Coordinates
@@ -10,7 +11,13 @@ const Map: React.FC = () => { // Map.tsx constant values for GoogleMap
   return (
     <div>
       <Header />
-      <GoogleMap center={center} zoom={zoom} />
+      <Grid item xs={10} height={'100vh'}>
+        <Grow in timeout={900}>
+          <Paper sx={{height: '100%', overflowY: 'hidden' }}>
+            <GoogleMap center={center} zoom={zoom} />
+          </Paper>
+        </Grow>
+      </Grid>
     </div>
   );
 };

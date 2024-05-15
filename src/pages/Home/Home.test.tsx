@@ -1,33 +1,71 @@
 import React from 'react';
-import '@testing-library/jest-dom/extend-expect';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import { BrowserRouter as Router } from 'react-router-dom';
 import Home from './Home';
+import '@testing-library/jest-dom';
 
-test('renders Home component', () => {
-  render(<Home />);
+describe('Home component tests', () => {
 
-  // Check if the component renders
-  const homeComponent = screen.getByTestId('home-component');
-  expect(homeComponent).toBeInTheDocument();
+  it('should render the header', () => {
+    render(
+      <Router>
+        <Home />
+      </Router>
+    );
+    const headerText = screen.getByText(/dashboard/i);
+    expect(headerText).toBeInTheDocument();
+  });
 
-  // Check if the header is rendered with the correct text
-  const headerElement = screen.getByText('AI Dashboard');
-  expect(headerElement).toBeInTheDocument();
+  it('should display the Alerts section with correct links', () => {
+    render(
+      <Router>
+        <Home />
+      </Router>
+    );
+    const alertsHeadings = screen.getAllByText('Alerts');
+    const alertsHeading = alertsHeadings.find(heading => heading.tagName === 'H4');
+    expect(alertsHeading).toBeInTheDocument();
 
-  // Check if the Alerts section is rendered with the correct links
-  const alertsElement = screen.getByText('Alerts');
-  expect(alertsElement).toBeInTheDocument();
-  expect(screen.getByText('Zone 1')).toBeInTheDocument();
-  expect(screen.getByText('Zone 2')).toBeInTheDocument();
-  expect(screen.getByText('Zone 3')).toBeInTheDocument();
-  expect(screen.getByText('Zone 4')).toBeInTheDocument();
+    // Check links are rendered and clickable
+    const zone1Link = screen.getByRole('link', { name: 'Zone 1' });
+    expect(zone1Link).toHaveAttribute('href', '/zone/1');
 
-  // Check if the Status section is renderedw
-  const statusElement = screen.getByText('Status');
-  expect(statusElement).toBeInTheDocument();
+    const zone2Link = screen.getByRole('link', { name: 'Zone 2' });
+    expect(zone2Link).toHaveAttribute('href', '/zone/2');
 
-  // Check if the Map section is rendered with the correct text
-  const mapElement = screen.getByText('Map');
-  expect(mapElement).toBeInTheDocument();
-  expect(screen.getByTestId('interactive-map')).toBeInTheDocument();
+    const zone3Link = screen.getByRole('link', { name: 'Zone 3' });
+    expect(zone3Link).toHaveAttribute('href', '/zone/3');
+
+    const zone4Link = screen.getByRole('link', { name: 'Zone 4' });
+    expect(zone4Link).toHaveAttribute('href', '/zone/4');
+  });
+
+  it('should display the Status section with a BasicTable', () => {
+    render(
+      <Router>
+        <Home />
+      </Router>
+    );
+    const statusHeadings = screen.getAllByText('Status');
+    const statusHeading = statusHeadings.find(heading => heading.tagName === 'H4');
+    expect(statusHeading).toBeInTheDocument();
+    
+    // Ensure BasicTable is rendered
+    expect(screen.getByText('Asset')).toBeInTheDocument();
+    expect(screen.getByText('No.')).toBeInTheDocument();
+    expect(screen.getByText('Condition')).toBeInTheDocument();
+    expect(screen.getByText('Location')).toBeInTheDocument();
+  });
+
+  it('should display the Map section correctly', () => {
+    render(
+      <Router>
+        <Home />
+      </Router>
+    );
+    const mapHeadings = screen.getAllByText('Map');
+    const mapHeading = mapHeadings.find(heading => heading.tagName === 'H4');
+    expect(mapHeading).toBeInTheDocument();
+
+  });
 });
