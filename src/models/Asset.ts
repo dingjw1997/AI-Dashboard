@@ -6,9 +6,9 @@ export class Location {
       public street: string,
       public postcode: string
     ) {}
-}
-
-export class Asset {
+  }
+  
+  export class Asset {
     constructor(
         public name: string,
         public number: number,
@@ -16,7 +16,7 @@ export class Asset {
         public material: string,
         public lastInspectionDate: string,
         public lastUploadDate: string,
-        public location: Location
+        public location: Location,
+        public inspectionNotes: string
     ) {}
-}
-  
+  }

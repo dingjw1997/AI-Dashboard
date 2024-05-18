@@ -1,26 +1,15 @@
 import React, { useRef, useState } from 'react';
 import { TextField, MenuItem, FormControl, InputLabel, Stack, Typography, Button, Slide, Zoom, Select, SelectChangeEvent } from '@mui/material';
 import Header from '../../components/Header/Header';
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/database';
-
-
-const firebaseConfig = {
-  apiKey: "AIzaSyDgyKfqT6QDWL96WVQ2J14vT44V599yl04",
-  authDomain: "reactfire-fe0d2.firebaseapp.com",
-  projectId: "reactfire-fe0d2",
-  storageBucket: "reactfire-fe0d2.appspot.com",
-  messagingSenderId: "121446039497",
-  appId: "1:121446039497:web:02bd838be5b1fc57edf218"
-};
-  
-firebase.initializeApp(firebaseConfig);
+import firebase from '../../components/Database/FirebaseDatabase'; 
 
 function Upload() {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [assetInfo, setAssetInfo] = useState({
     assetName: '',
+    assetNumber: '',
+    assetCondition: '',
     assetMaterialType: ''
   });
 
@@ -28,7 +17,6 @@ function Upload() {
     dateUploaded: '',
     dateLastInspected: ''
   });
-
 
   const [address, setAddress] = useState({
     country:'',
@@ -117,6 +105,8 @@ function Upload() {
 
         setAssetInfo({
           assetName: '',
+          assetNumber: '',
+          assetCondition: '',
           assetMaterialType: ''
         })
         
@@ -150,6 +140,8 @@ function Upload() {
           />
         </Slide>
 
+
+        
         <Slide direction="up" in={true} mountOnEnter unmountOnExit>
           <FormControl variant="outlined" sx={{ minWidth: "45%" }}>
             <InputLabel id="asset-material-type-label">Asset Material Type</InputLabel>
@@ -170,6 +162,21 @@ function Upload() {
 
         <Slide direction="up" in={true} mountOnEnter unmountOnExit>
           <TextField
+            id="last-Uploaded-date-field"
+            label="Last Uploaded Date"
+            type="date"
+            name="dateUploaded"
+            value={dateInfo.dateUploaded}
+            onChange={(e) => setDateInfo({ ...dateInfo, dateUploaded: e.target.value })}
+            sx={{ minWidth: "45%" }}
+            InputLabelProps={{
+              shrink: true, 
+            }}
+          />
+        </Slide>
+       
+        <Slide direction="up" in={true} mountOnEnter unmountOnExit>
+          <TextField
             id="last-inspection-date-field"
             label="Last Inspection Date"
             type="date"
@@ -182,7 +189,7 @@ function Upload() {
             }}
           />
         </Slide>
-       
+
         <Typography variant="h4" component="h4">Location</Typography>
 
         <TextField 
