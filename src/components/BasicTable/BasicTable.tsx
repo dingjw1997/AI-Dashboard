@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -7,41 +7,83 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useNavigate } from 'react-router-dom';
-import { Asset, Location } from '../../models/Asset';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/database';
 
-const defaultColumns = [
-  'Asset',
-  'No.',
-  'Condition',
-  'Location',
-  'Material',
-  'Last Inspection Date',
-  'Last Upload Date',
-];
+const firebaseConfig = {
+  apiKey: "AIzaSyDgyKfqT6QDWL96WVQ2J14vT44V599yl04",
+  authDomain: "reactfire-fe0d2.firebaseapp.com",
+  projectId: "reactfire-fe0d2",
+  storageBucket: "reactfire-fe0d2.appspot.com",
+  messagingSenderId: "121446039497",
+  appId: "1:121446039497:web:02bd838be5b1fc57edf218"
+};
 
-const rows: Asset[] = [
-  new Asset(
-    'Matagarup Bridge',
-    101,
-    'Good',
-    'Steel',
-    '2023-08-15',
-    '2024-01-04',
-    new Location('Australia', 'WA', 'East Perth', 'Nile Street', '6004')
-  ),
-  new Asset(
-    'Perth Railway Station',
-    202,
-    'Requires Inspection',
-    'Brick and Steel',
-    '2023-06-22',
-    '2023-08-01',
-    new Location('Australia', 'WA', 'Perth CBD', 'Railway Street', '6005')
-  ),
-];
+firebase.initializeApp(firebaseConfig);
 
-function BasicTable({ columnsToShow = defaultColumns }) {
+export class Location {
+  constructor(
+    public country: string,
+    public state: string,
+    public city: string,
+    public street: string,
+    public postcode: string
+  ) {}
+}
+
+export class Asset {
+  constructor(
+      public name: string,
+      public number: number,
+      public condition: string,
+      public material: string,
+      public lastInspectionDate: string,
+      public lastUploadDate: string,
+      public location: Location
+  ) {}
+}
+
+
+type Column = 'Asset' | 'No.' | 'Condition' | 'Location' | 'Material' | 'Last Inspection Date' | 'Last Upload Date';
+
+interface BasicTableProps {
+  columnsToShow?: Column[];
+}
+
+function BasicTable({ columnsToShow = [] }: BasicTableProps) {
+  const [uploads, setUploads] = useState<any[]>([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const dbRef = firebase.database().ref('uploads');
+    dbRef.on('value', (snapshot) => {
+      const data = snapshot.val();
+      const uploadsArray = data ? Object.keys(data).map(key => ({ id: key, ...data[key] })) : [];
+      setUploads(uploadsArray);
+    });
+  }, []);
+
+  // Calculate newLocations and rows inside the component
+  const newLocations = uploads.map(upload => new Location(
+    upload.address.country,
+    upload.address.state,
+    upload.address.city,
+    upload.address.street,
+    upload.address.postcode
+  ));
+
+  
+
+
+  const rows: Asset[] = newLocations.map(newLocation => new Asset(
+    'Matagarup Bridge', // Hard-coded value for name
+    101, // Hard-coded value for number
+    'Good', // Hard-coded value for condition
+    'Steel', // Hard-coded value for material
+    '2023-08-15', // Hard-coded value for lastInspectionDate
+    '2024-01-04', // Hard-coded value for lastUploadDate
+    newLocation // Fetched location object
+  ));
 
   const handleRowClick = (row: Asset) => {
     localStorage.setItem('currentAssetDetails', JSON.stringify(row));
@@ -91,3 +133,5 @@ function BasicTable({ columnsToShow = defaultColumns }) {
 }
 
 export default BasicTable;
+
+

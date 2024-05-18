@@ -1,9 +1,20 @@
 import React, { useRef, useState } from 'react';
 import { TextField, MenuItem, FormControl, InputLabel, Stack, Typography, Button, Slide, Zoom, Select, SelectChangeEvent } from '@mui/material';
 import Header from '../../components/Header/Header';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import database from './DatabaseFirebase';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/database';
 
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDgyKfqT6QDWL96WVQ2J14vT44V599yl04",
+  authDomain: "reactfire-fe0d2.firebaseapp.com",
+  projectId: "reactfire-fe0d2",
+  storageBucket: "reactfire-fe0d2.appspot.com",
+  messagingSenderId: "121446039497",
+  appId: "1:121446039497:web:02bd838be5b1fc57edf218"
+};
+  
+firebase.initializeApp(firebaseConfig);
 
 function Upload() {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -18,8 +29,9 @@ function Upload() {
     dateLastInspected: ''
   });
 
+
   const [address, setAddress] = useState({
-    country: '',
+    country:'',
     street: '',
     city: '',
     state: '',
@@ -29,6 +41,9 @@ function Upload() {
   const [inspectionNotes, setInspectionNotes] = useState({
     inspectionNotes: ''
   });
+
+  const [submitted, setSubmitted] = useState(false);
+
 
   const handleAssetInfoChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
     const name = event.target.name;
@@ -47,12 +62,6 @@ function Upload() {
     }));
   };
 
-  const handleClick = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
-  };
-
   const handleInspectionNotesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setInspectionNotes(prevState => ({
@@ -61,24 +70,74 @@ function Upload() {
     }));
   };
 
+  const handleClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files && event.target.files[0];
     if (file) {
-      if (file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
-          file.type === 'image/tif') {
-        console.log('File Uploaded:', file);
-      } else {
-        alert('Alert: Please upload only .xlsx or .tif files.');
-      }
+      // Save file information to the database
+      const fileData = {
+        fileName: file.name,
+        fileType: file.type,
+        fileSize: file.size
+      };
+
+      // Include address information
+      const dataToSend = {
+        inspectionNotes,
+        assetInfo,
+        dateInfo,
+        address,
+        file: fileData
+      };
+
+      const dbRef = firebase.database().ref('uploads');
+      dbRef.push(dataToSend);
+      console.log('Data Uploaded:', dataToSend);
+      console.log('File Uploaded:', file);
+
+      // Set submitted to true
+      setSubmitted(true);
+
+      // Clear the form after 3 seconds
+      setTimeout(() => {
+        setInspectionNotes({
+          inspectionNotes: ''
+        }) 
+
+        setDateInfo({
+          dateUploaded: '',
+          dateLastInspected: ''
+      })
+
+
+        setAssetInfo({
+          assetName: '',
+          assetMaterialType: ''
+        })
+        
+        setAddress({
+          country:'',
+          street: '',
+          city: '',
+          state: '',
+          postcode: ''
+        });
+        setSubmitted(false);
+      }, 3000);
     }
   };
 
   return (
     <div>
       <Header />
-      <Stack spacing={2} py={2} px={3} alignItems="center" sx={{ height: "auto" }}>
-        
-        <Typography variant="h4" component="h4">Asset Details</Typography>
+      <Stack spacing={2} pt={2} px={3} alignItems="center" sx={{ height: "100vh" }}>
+       
+      <Typography variant="h4" component="h4">Asset Details</Typography>
         <Slide direction="up" in={true} mountOnEnter unmountOnExit>
           <TextField 
             id="asset-name-field" 
@@ -123,68 +182,55 @@ function Upload() {
             }}
           />
         </Slide>
-
+       
         <Typography variant="h4" component="h4">Location</Typography>
-        <Slide direction="up" in={true} mountOnEnter unmountOnExit>
-          <TextField 
-            id="country-field" 
-            label="Country" 
-            variant="outlined" 
-            name="country" 
-            value={address.country} 
-            onChange={handleAddressChange} 
-            sx={{ minWidth: "45%" }}
-          />
-        </Slide>
 
-        <Slide direction="up" in={true} mountOnEnter unmountOnExit>
-          <TextField 
-            id="state-field" 
-            label="State" 
-            variant="outlined" 
-            name="state" 
-            value={address.state} 
-            onChange={handleAddressChange} 
-            sx={{ minWidth: "45%" }}
-          />
-        </Slide>
-
-        <Slide direction="up" in={true} mountOnEnter unmountOnExit>
-          <TextField 
-            id="city-field" 
-            label="City" 
-            variant="outlined" 
-            name="city" 
-            value={address.city} 
-            onChange={handleAddressChange} 
-            sx={{ minWidth: "45%" }}
-          />
-        </Slide>
-
-        <Slide direction="up" in={true} mountOnEnter unmountOnExit>
-          <TextField 
-            id="street-field" 
-            label="Street" 
-            variant="outlined" 
-            name="street" 
-            value={address.street} 
-            onChange={handleAddressChange} 
-            sx={{ minWidth: "45%" }}
-          />
-        </Slide>
-
-        <Slide direction="up" in={true} mountOnEnter unmountOnExit>
-          <TextField 
-            id="postcode-field" 
-            label="Postcode" 
-            variant="outlined" 
-            name="postcode" 
-            value={address.postcode} 
-            onChange={handleAddressChange} 
-            sx={{ minWidth: "45%" }}
-          />
-        </Slide>
-
+        <TextField 
+          id="country-field" 
+          label="Country" 
+          variant="outlined" 
+          name="country" 
+          value={address.country} 
+          onChange={handleAddressChange} 
+          sx={{ minWidth: "45%" }}
+        />
+        <TextField 
+          id="street-field" 
+          label="Street" 
+          variant="outlined" 
+          name="street" 
+          value={address.street} 
+          onChange={handleAddressChange} 
+          sx={{ minWidth: "45%" }}
+        />
+        <TextField 
+          id="city-field" 
+          label="City" 
+          variant="outlined" 
+          name="city" 
+          value={address.city} 
+          onChange={handleAddressChange} 
+          sx={{ minWidth: "45%" }}
+        />
+        <TextField 
+          id="state-field" 
+          label="State" 
+          variant="outlined" 
+          name="state" 
+          value={address.state} 
+          onChange={handleAddressChange} 
+          sx={{ minWidth: "45%" }}
+        />
+        <TextField 
+          id="postcode-field" 
+          label="Postcode" 
+          variant="outlined" 
+          name="postcode" 
+          value={address.postcode} 
+          onChange={handleAddressChange} 
+          sx={{ minWidth: "45%" }}
+        />
+        
         <Typography variant="h4" component="h4">Optional</Typography>
         <Slide direction="up" in={true} mountOnEnter unmountOnExit>
           <TextField 
@@ -202,21 +248,22 @@ function Upload() {
 
         <input
           type="file"
-          accept=".xlsx,.tif"
+          accept=".xlsx,.tiff"
           onChange={handleFileUpload}
           style={{ display: 'none' }}
           ref={fileInputRef}
+          data-testid="file-input"
         />
 
-        <Zoom in={true}>
-          <Button 
-            variant="contained" 
-            onClick={handleClick}
-            sx={{ height: "2.7rem", minWidth: "45%" }}
-          >
-            Upload Files
-          </Button>
-        </Zoom>
+        {submitted && <Typography variant="h6">Submitted</Typography>}
+
+        <Button 
+          variant="contained" 
+          onClick={handleClick}
+          sx={{ height: "2.7rem", minWidth: "45%" }}
+        >
+          Upload Files
+        </Button>
       </Stack>
     </div>
   );
