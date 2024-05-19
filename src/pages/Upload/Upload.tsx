@@ -1,10 +1,11 @@
 import React, { useRef, useState } from 'react';
-import { TextField, MenuItem, FormControl, InputLabel, Stack, Typography, Button, Slide, Zoom, Select, SelectChangeEvent } from '@mui/material';
+import { TextField, MenuItem, FormControl, InputLabel, Stack, Typography, Button, Slide, Select, SelectChangeEvent } from '@mui/material';
 import Header from '../../components/Header/Header';
 import firebase from '../../components/Database/FirebaseDatabase'; 
 
 function Upload() {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const today = new Date().toISOString().slice(0, 10);
 
   const [assetInfo, setAssetInfo] = useState({
     assetName: '',
@@ -14,7 +15,7 @@ function Upload() {
   });
 
   const [dateInfo, setDateInfo] = useState({
-    dateUploaded: '',
+    dateUploaded: today,
     dateLastInspected: ''
   });
 
@@ -100,8 +101,7 @@ function Upload() {
         setDateInfo({
           dateUploaded: '',
           dateLastInspected: ''
-      })
-
+        })
 
         setAssetInfo({
           assetName: '',
@@ -109,7 +109,7 @@ function Upload() {
           assetCondition: '',
           assetMaterialType: ''
         })
-        
+      
         setAddress({
           country:'',
           street: '',
@@ -117,6 +117,7 @@ function Upload() {
           state: '',
           postcode: ''
         });
+
         setSubmitted(false);
       }, 3000);
     }
@@ -139,8 +140,6 @@ function Upload() {
             sx={{ minWidth: "45%" }}
           />
         </Slide>
-
-
         
         <Slide direction="up" in={true} mountOnEnter unmountOnExit>
           <FormControl variant="outlined" sx={{ minWidth: "45%" }}>
@@ -158,21 +157,6 @@ function Upload() {
               <MenuItem value="Asphalt">Asphalt</MenuItem>
             </Select>
           </FormControl>
-        </Slide>
-
-        <Slide direction="up" in={true} mountOnEnter unmountOnExit>
-          <TextField
-            id="last-Uploaded-date-field"
-            label="Last Uploaded Date"
-            type="date"
-            name="dateUploaded"
-            value={dateInfo.dateUploaded}
-            onChange={(e) => setDateInfo({ ...dateInfo, dateUploaded: e.target.value })}
-            sx={{ minWidth: "45%" }}
-            InputLabelProps={{
-              shrink: true, 
-            }}
-          />
         </Slide>
        
         <Slide direction="up" in={true} mountOnEnter unmountOnExit>
