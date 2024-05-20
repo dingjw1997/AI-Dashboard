@@ -32,7 +32,7 @@ function Home() {
         <Grid item xs={5}>
           <Grow in timeout={500}>
             <Paper sx={gridItemStyles}>
-            <Typography variant="h4" component="h4" textAlign="center" gutterBottom>Alerts</Typography>
+            <Typography variant="h4" component="h4" textAlign="center" gutterBottom>Asset Condition</Typography>
             <Stack direction="column" spacing={2} sx={gridItemStyles}>
               <Card variant="outlined">
                 <CardActionArea href="/zone/1">
@@ -82,7 +82,7 @@ function Home() {
         <Grid item xs={6}>
           <Grow in timeout={700}>
             <Paper sx={gridItemStyles}>
-              <Typography variant="h4" component="h4" textAlign="center" gutterBottom>Status</Typography>
+              <Typography variant="h4" component="h4" textAlign="center" gutterBottom>Recent Uploads</Typography>
               <div style={{ maxWidth: "100%", overflowX: "hidden" }}>
                 <BasicTable columnsToShow={['Asset', 'No.', 'Condition', 'Location']} />
               </div>
