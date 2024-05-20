@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../Header/Header';
 import { Grid, Grow, Paper, Typography, Box } from '@mui/material';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, ArcElement, Title, Tooltip, Legend } from 'chart.js';
@@ -8,6 +8,56 @@ import { Asset } from '../../models/Asset';
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, ArcElement, Title, Tooltip, Legend);
 
 const AssetDetail = () => {
+  const [chartData, setChartData] = useState<{ labels: string[], datasets: { label: string, data: number[], fill: boolean, backgroundColor: string, borderColor: string }[] } | null>(null);
+
+  const yAxisMapping: { [key: string]: number } = {
+    "Urgent Inspection": 30,
+    "Requires Inspection": 20,
+    "Poor": 10,
+    "Good": 5,
+    "Excellent": 0
+  };
+
+  const fetchCondition = async (date: string): Promise<number> => {
+    const response = await fetch(`https://localhost:7037/api/prediction/${date}`);
+    if (!response.ok) throw new Error('Failed to fetch asset condition');
+    const condition = await response.text();
+    return yAxisMapping[condition] || 0; // Default to 0 if condition is not found
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const dates = [
+        new Date(),
+        new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
+        new Date(Date.now() + 12 * 24 * 60 * 60 * 1000),
+        new Date(Date.now() + 17 * 24 * 60 * 60 * 1000),
+        new Date(Date.now() + 26 * 24 * 60 * 60 * 1000),
+        new Date(Date.now() + 34 * 24 * 60 * 60 * 1000)
+      ];
+
+      const formattedDates = dates.map(date => date.toISOString().slice(0, 19).replace('T', ' '));
+
+      try {
+        const conditions: number[] = await Promise.all(formattedDates.map(fetchCondition));
+        setChartData({
+          labels: ['5 Days', '12 Days', '17 Days', '26 Days', '34 Days'],
+          datasets: [{
+            label: 'Asset Condition Over Time',
+            data: conditions,
+            fill: false,
+            backgroundColor: 'rgb(75, 192, 192)',
+            borderColor: 'rgba(75, 192, 192, 0.2)',
+          }]
+        });
+      } catch (error) {
+        console.error('Error fetching conditions:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   // Styling for the grid items
   const gridItemStyles = {
     overflowX: 'hidden',
@@ -27,20 +77,7 @@ const AssetDetail = () => {
     flexDirection: 'column',
   };
 
-  // Chart data and configuration
-  const lineData1 = {
-    labels: ['January', 'February', 'March', 'April', 'May'],
-    datasets: [
-      {
-        label: 'Demo Line Plot',
-        data: [65, 59, 80, 81, 56],
-        fill: false,
-        backgroundColor: 'rgb(75, 192, 192)',
-        borderColor: 'rgba(75, 192, 192, 0.2)',
-      },
-    ],
-  };
-
+  // Chart options
   const options = {
     plugins: {
       title: {
@@ -144,7 +181,11 @@ const AssetDetail = () => {
                 Asset Condition
               </Typography>
               <Box sx={{ flex: 1 }}>
-                <Line data={lineData1} options={options} />
+                {chartData ? (
+                  <Line data={chartData} options={options} />
+                ) : (
+                  <Typography variant="body1" textAlign="center">Loading chart data...</Typography>
+                )}
               </Box>
             </Paper>
           </Grow>
