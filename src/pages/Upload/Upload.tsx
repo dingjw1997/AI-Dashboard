@@ -271,6 +271,23 @@ function Upload() {
         >
           Upload Instrumental Measurements
         </Button>
+
+        <Button
+          variant="contained"
+          onClick={handleClick}
+          sx={{
+            height: "2.7rem",
+            minWidth: "45%",
+            backgroundColor: "red", // Background color
+            color: "white", // Text Colour
+            '&:hover': {
+              backgroundColor: "darkred" // Hover background color
+            }
+          }}
+        >
+          Confirm
+        </Button>
+        
       </Stack>
     </div>
   );
