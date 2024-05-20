@@ -3,8 +3,7 @@ import Header from '../Header/Header';
 import { Grid, Grow, Paper, Typography, Box } from '@mui/material';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, ArcElement, Title, Tooltip, Legend } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import { Asset } from '../../models/Asset'; // Import the Asset class
-
+import { Asset } from '../../models/Asset'; 
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, ArcElement, Title, Tooltip, Legend);
 

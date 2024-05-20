@@ -11,7 +11,7 @@ import { Location, Asset } from  '../../models/Asset';
 import firebase from '../Database/FirebaseDatabase'; 
 
 
-type Column = 'Asset' | 'No.' | 'Condition' | 'Location' | 'Material' | 'Last Inspection Date' | 'Last Upload Date' | 'Inspection Notes';
+type Column = 'Asset' | 'No.' | 'Condition' | 'Location' | 'Material' | 'Last Inspection Date' | 'Last Upload Date';
 
 interface BasicTableProps {
   columnsToShow?: Column[];
@@ -42,7 +42,7 @@ function BasicTable({ columnsToShow = [] }: BasicTableProps) {
     const asset = new Asset(
       upload.assetInfo?.assetName || 'N/A',
       index + 1, 
-      upload.condition || 'Good', 
+      upload.assetInfo?.assetCondition || 'N/A', 
       upload.assetInfo?.assetMaterialType || 'N/A',
       upload.dateInfo?.dateLastInspected || 'N/A',
       upload.dateInfo?.dateUploaded || 'N/A',
@@ -69,7 +69,6 @@ function BasicTable({ columnsToShow = [] }: BasicTableProps) {
             {columnsToShow.includes('Material') && <TableCell sx={{ fontWeight: 'bold' }} align="right">Material</TableCell>}
             {columnsToShow.includes('Last Inspection Date') && <TableCell sx={{ fontWeight: 'bold' }} align="right">Last Inspection Date</TableCell>}
             {columnsToShow.includes('Last Upload Date') && <TableCell sx={{ fontWeight: 'bold' }} align="right">Last Upload Date</TableCell>}
-            {columnsToShow.includes('Inspection Notes') && <TableCell sx={{ fontWeight: 'bold' }} align="right">Inspection Notes</TableCell>}
           </TableRow>
         </TableHead>
 
@@ -92,7 +91,6 @@ function BasicTable({ columnsToShow = [] }: BasicTableProps) {
               {columnsToShow.includes('Material') && <TableCell align="right">{row.material}</TableCell>}
               {columnsToShow.includes('Last Inspection Date') && <TableCell align="right">{row.lastInspectionDate}</TableCell>}
               {columnsToShow.includes('Last Upload Date') && <TableCell align="right">{row.lastUploadDate}</TableCell>}
-              {columnsToShow.includes('Inspection Notes') && <TableCell align="right">{row.inspectionNotes}</TableCell>}
             </TableRow>
           ))}
         </TableBody>

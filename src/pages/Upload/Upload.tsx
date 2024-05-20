@@ -1,10 +1,12 @@
 import React, { useRef, useState } from 'react';
 import { TextField, MenuItem, FormControl, InputLabel, Stack, Typography, Button, Slide, Select, SelectChangeEvent } from '@mui/material';
 import Header from '../../components/Header/Header';
-import firebase from '../../components/Database/FirebaseDatabase'; 
+import firebase from '../../components/Database/FirebaseDatabase';
 
 function Upload() {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const photoInputRef = useRef<HTMLInputElement>(null);
+  const measurementInputRef = useRef<HTMLInputElement>(null);
   const today = new Date().toISOString().slice(0, 10);
 
   const [assetInfo, setAssetInfo] = useState({
@@ -20,7 +22,7 @@ function Upload() {
   });
 
   const [address, setAddress] = useState({
-    country:'',
+    country: '',
     street: '',
     city: '',
     state: '',
@@ -33,102 +35,79 @@ function Upload() {
 
   const [submitted, setSubmitted] = useState(false);
 
+  // Type definition for event parameter
+  type ChangeEvent = React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>;
 
-  const handleAssetInfoChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    setAssetInfo(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
-  };
-
-  const handleAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // Generic handleChange function for input fields
+  const handleChange = (setState: React.Dispatch<React.SetStateAction<any>>) => (e: ChangeEvent) => {
     const { name, value } = e.target;
-    setAddress(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
+    setState((prevState: any) => ({ ...prevState, [name]: value }));
   };
 
-  const handleInspectionNotesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setInspectionNotes(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
-  };
+  const handleConfirm = async () => {
+    try {
+      // API call to get the asset condition
+      const response = await fetch(`https://localhost:7037/api/prediction/2024-05-23 12:00:00`);
+      if (!response.ok) throw new Error('Failed to fetch asset condition');
+      const condition = await response.text(); // Assuming the response is plain text
 
-  const handleClick = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
-  };
-
-  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files && event.target.files[0];
-    if (file) {
-      // Save file information to the database
-      const fileData = {
-        fileName: file.name,
-        fileType: file.type,
-        fileSize: file.size
-      };
-
-      // Include address information
       const dataToSend = {
         inspectionNotes,
-        assetInfo,
+        assetInfo: {
+          ...assetInfo,
+          assetCondition: condition, // Update the condition from the API
+        },
         dateInfo,
         address,
-        file: fileData
       };
 
       const dbRef = firebase.database().ref('uploads');
       dbRef.push(dataToSend);
-      console.log('Data Uploaded:', dataToSend);
-      console.log('File Uploaded:', file);
-
-      // Set submitted to true
+      console.log('Data Submitted:', dataToSend);
       setSubmitted(true);
-
-      // Clear the form after 3 seconds
-      setTimeout(() => {
-        setInspectionNotes({
-          inspectionNotes: ''
-        }) 
-
-        setDateInfo({
-          dateUploaded: '',
-          dateLastInspected: ''
-        })
-
-        setAssetInfo({
-          assetName: '',
-          assetNumber: '',
-          assetCondition: '',
-          assetMaterialType: ''
-        })
-      
-        setAddress({
-          country:'',
-          street: '',
-          city: '',
-          state: '',
-          postcode: ''
-        });
-
-        setSubmitted(false);
-      }, 3000);
+      setTimeout(() => resetForm(), 3000);
+    } catch (error) {
+      console.error('Error:', error);
+      alert(error);
     }
+  };
+
+  const handlePhotoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log('Photo Uploaded:', event.target.files && event.target.files[0]);
+  };
+
+  const handleMeasurementUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log('Measurement Uploaded:', event.target.files && event.target.files[0]);
+  };
+
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log('File Uploaded:', event.target.files && event.target.files[0]);
+  };
+
+  const resetForm = () => {
+    setInspectionNotes({ inspectionNotes: '' });
+    setDateInfo({ dateUploaded: '', dateLastInspected: '' });
+    setAssetInfo({
+      assetName: '',
+      assetNumber: '',
+      assetCondition: '',
+      assetMaterialType: ''
+    });
+    setAddress({
+      country: '',
+      street: '',
+      city: '',
+      state: '',
+      postcode: ''
+    });
+    setSubmitted(false);
   };
 
   return (
     <div>
       <Header />
       <Stack spacing={2} pt={2} px={3} alignItems="center" sx={{ height: "100vh" }}>
-       
-      <Typography variant="h4" component="h4">Asset Details</Typography>
+        <Typography variant="h4" component="h4">Asset Details</Typography>
         <Slide direction="up" in={true} mountOnEnter unmountOnExit>
           <TextField 
             id="asset-name-field" 
@@ -136,7 +115,7 @@ function Upload() {
             variant="outlined" 
             name="assetName" 
             value={assetInfo.assetName} 
-            onChange={handleAssetInfoChange} 
+            onChange={handleChange(setAssetInfo)} 
             sx={{ minWidth: "45%" }}
           />
         </Slide>
@@ -147,9 +126,9 @@ function Upload() {
             <Select
               labelId="asset-material-type-label"
               id="asset-material-type-select"
-              name="assetMaterialType"  
+              name="assetMaterialType"
               value={assetInfo.assetMaterialType}
-              onChange={handleAssetInfoChange}
+              onChange={handleChange(setAssetInfo)}
               label="Asset Material Type"
             >
               <MenuItem value="Concrete">Concrete</MenuItem>
@@ -166,7 +145,7 @@ function Upload() {
             type="date"
             name="dateLastInspected"
             value={dateInfo.dateLastInspected}
-            onChange={(e) => setDateInfo({ ...dateInfo, dateLastInspected: e.target.value })}
+            onChange={handleChange(setDateInfo)}
             sx={{ minWidth: "45%" }}
             InputLabelProps={{
               shrink: true, 
@@ -176,10 +155,10 @@ function Upload() {
 
         <Button 
           variant="contained" 
-          onClick={handleClick}
+          onClick={handleConfirm}
           sx={{ height: "2.7rem", minWidth: "45%" }}
         >
-          Upload Files
+          Confirm
         </Button>
 
         <Typography variant="h4" component="h4">Location</Typography>
@@ -190,7 +169,7 @@ function Upload() {
           variant="outlined" 
           name="country" 
           value={address.country} 
-          onChange={handleAddressChange} 
+          onChange={handleChange(setAddress)} 
           sx={{ minWidth: "45%" }}
         />
         <TextField 
@@ -199,7 +178,7 @@ function Upload() {
           variant="outlined" 
           name="street" 
           value={address.street} 
-          onChange={handleAddressChange} 
+          onChange={handleChange(setAddress)} 
           sx={{ minWidth: "45%" }}
         />
         <TextField 
@@ -208,7 +187,7 @@ function Upload() {
           variant="outlined" 
           name="city" 
           value={address.city} 
-          onChange={handleAddressChange} 
+          onChange={handleChange(setAddress)} 
           sx={{ minWidth: "45%" }}
         />
         <TextField 
@@ -217,7 +196,7 @@ function Upload() {
           variant="outlined" 
           name="state" 
           value={address.state} 
-          onChange={handleAddressChange} 
+          onChange={handleChange(setAddress)} 
           sx={{ minWidth: "45%" }}
         />
         <TextField 
@@ -226,7 +205,7 @@ function Upload() {
           variant="outlined" 
           name="postcode" 
           value={address.postcode} 
-          onChange={handleAddressChange} 
+          onChange={handleChange(setAddress)} 
           sx={{ minWidth: "45%" }}
         />
         
@@ -240,54 +219,59 @@ function Upload() {
             multiline
             rows={7}  
             value={inspectionNotes.inspectionNotes} 
-            onChange={handleInspectionNotesChange} 
+            onChange={handleChange(setInspectionNotes)} 
             sx={{ minWidth: "45%" }} 
           />
         </Slide>
 
+        <Button 
+          variant="contained" 
+          onClick={() => fileInputRef.current && fileInputRef.current.click()}
+          sx={{ height: "2.7rem", minWidth: "45%" }}
+        >
+          Upload Files
+        </Button>
         <input
+          ref={fileInputRef}
           type="file"
           accept=".xlsx,.tiff"
           onChange={handleFileUpload}
           style={{ display: 'none' }}
-          ref={fileInputRef}
-          data-testid="file-input"
         />
-
-        {submitted && <Typography variant="h6">Submitted</Typography>}
 
         <Button 
           variant="contained" 
-          onClick={handleClick}
+          onClick={() => photoInputRef.current && photoInputRef.current.click()}
           sx={{ height: "2.7rem", minWidth: "45%" }}
         >
           Upload Site Photos
         </Button>
+        <input
+          ref={photoInputRef}
+          type="file"
+          accept=".png,.jpg,.jpeg"
+          onChange={handlePhotoUpload}
+          style={{ display: 'none' }}
+          multiple
+        />
 
         <Button 
           variant="contained" 
-          onClick={handleClick}
+          onClick={() => measurementInputRef.current && measurementInputRef.current.click()}
           sx={{ height: "2.7rem", minWidth: "45%" }}
         >
           Upload Instrumental Measurements
         </Button>
+        <input
+          ref={measurementInputRef}
+          type="file"
+          accept=".png,.jpg,.jpeg"
+          onChange={handleMeasurementUpload}
+          style={{ display: 'none' }}
+          multiple
+        />
 
-        <Button
-          variant="contained"
-          onClick={handleClick}
-          sx={{
-            height: "2.7rem",
-            minWidth: "45%",
-            backgroundColor: "red", // Background color
-            color: "white", // Text Colour
-            '&:hover': {
-              backgroundColor: "darkred" // Hover background color
-            }
-          }}
-        >
-          Confirm
-        </Button>
-        
+        {submitted && <Typography variant="h6">Submitted</Typography>}
       </Stack>
     </div>
   );
