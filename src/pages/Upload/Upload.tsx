@@ -153,8 +153,8 @@ function Upload() {
               label="Asset Material Type"
             >
               <MenuItem value="Concrete">Concrete</MenuItem>
-              <MenuItem value="Wood">Wood</MenuItem>
-              <MenuItem value="Asphalt">Asphalt</MenuItem>
+              <MenuItem value="Timber">Timber</MenuItem>
+              <MenuItem value="Steel">Steel</MenuItem>
             </Select>
           </FormControl>
         </Slide>
@@ -173,6 +173,14 @@ function Upload() {
             }}
           />
         </Slide>
+
+        <Button 
+          variant="contained" 
+          onClick={handleClick}
+          sx={{ height: "2.7rem", minWidth: "45%" }}
+        >
+          Upload Files
+        </Button>
 
         <Typography variant="h4" component="h4">Location</Typography>
 
@@ -253,7 +261,15 @@ function Upload() {
           onClick={handleClick}
           sx={{ height: "2.7rem", minWidth: "45%" }}
         >
-          Upload Files
+          Upload Site Photos
+        </Button>
+
+        <Button 
+          variant="contained" 
+          onClick={handleClick}
+          sx={{ height: "2.7rem", minWidth: "45%" }}
+        >
+          Upload Instrumental Measurements
         </Button>
       </Stack>
     </div>
