@@ -34,7 +34,7 @@ const Header: React.FC = () => {
       ],
     },
     { href: "/upload/", text: "Upload" },
-    { href: "/status/", text: "Status" },
+    { href: "/status/", text: "Inventory" },
     { href: "/map/", text: "Map" },
   ];
 
