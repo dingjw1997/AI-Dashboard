@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../Header/Header';
-import { Grid, Grow, Paper, Typography, Box } from '@mui/material';
+import { Grid, Grow, Paper, Typography, Box, ImageList, ImageListItem } from '@mui/material';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, ArcElement, Title, Tooltip, Legend } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import { Asset } from '../../models/Asset'; 
@@ -56,8 +56,7 @@ const AssetDetail = () => {
     };
 
     fetchData();
-  }, 
-);
+  }, []);
 
   // Styling for the grid items
   const gridItemStyles = {
@@ -171,6 +170,15 @@ const AssetDetail = () => {
     </Box>
   );
 
+  const inspectionNotes = assetDetails ? assetDetails.inspectionNotes : 'No notes available';
+
+  const placeholderImages = [
+    'https://via.placeholder.com/150',
+    'https://via.placeholder.com/150',
+    'https://via.placeholder.com/150',
+    'https://via.placeholder.com/150'
+  ];
+
   return (
     <div>
       <Header />
@@ -181,7 +189,7 @@ const AssetDetail = () => {
               <Typography variant="h4" component="h4" textAlign="center" pb={2} gutterBottom>
                 Asset Condition
               </Typography>
-              <Box sx={{ flex: 1 }}>
+              <Box sx={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 {chartData ? (
                   <Line data={chartData} options={options} />
                 ) : (
@@ -212,6 +220,40 @@ const AssetDetail = () => {
           </Grow>
         </Grid>
       </Grid>
+
+      <Grow in timeout={1100}>
+        <Box sx={{ mt: 5, display: 'flex', justifyContent: 'center', width: '100%' }}>
+          <Paper sx={{ ...gridItemStyles, width: '70%', padding: 2 }}>
+            <Typography variant="h4" component="h4" textAlign="center" pb={2} gutterBottom>
+              Inspection Notes
+            </Typography>
+            <Box sx={{ p: 2 }}>
+              <Typography variant="body1">{inspectionNotes}</Typography>
+            </Box>
+          </Paper>
+        </Box>
+      </Grow>
+
+      <Grow in timeout={1300}>
+        <Box sx={{ mt: 5, display: 'flex', justifyContent: 'center', width: '100%' }}>
+          <Paper sx={{ ...gridItemStyles, width: '70%', padding: 2 }}>
+            <Typography variant="h4" component="h4" textAlign="center" pb={2} gutterBottom>
+              Image Gallery
+            </Typography>
+            <ImageList cols={4} rowHeight={164}>
+              {placeholderImages.length > 0 ? (
+                placeholderImages.map((image, index) => (
+                  <ImageListItem key={index}>
+                    <img src={image} alt={`Placeholder ${index}`} loading="lazy" />
+                  </ImageListItem>
+                ))
+              ) : (
+                <Typography variant="body1" textAlign="center">No images for this asset yet.</Typography>
+              )}
+            </ImageList>
+          </Paper>
+        </Box>
+      </Grow>
     </div>
   );
 };
