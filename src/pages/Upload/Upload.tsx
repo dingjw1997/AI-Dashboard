@@ -65,7 +65,7 @@ function Upload() {
       dbRef.push(dataToSend);
       console.log('Data Submitted:', dataToSend);
       setSubmitted(true);
-      setTimeout(() => resetForm(), 3000);
+      setTimeout(() => resetForm(), 1000);
     } catch (error) {
       console.error('Error:', error);
       alert(error);
@@ -106,7 +106,7 @@ function Upload() {
   return (
     <div>
       <Header />
-      <Stack spacing={2} pt={2} px={3} alignItems="center" sx={{ height: "100vh" }}>
+      <Stack spacing={2} py={2} px={3} alignItems="center" sx={{ height: "100vh" }}>
         <Typography variant="h4" component="h4">Asset Details</Typography>
         <Slide direction="up" in={true} mountOnEnter unmountOnExit>
           <TextField 
@@ -150,77 +150,6 @@ function Upload() {
             InputLabelProps={{
               shrink: true, 
             }}
-          />
-        </Slide>
-
-        <Button 
-          variant="contained" 
-          onClick={handleConfirm}
-          sx={{ height: "2.7rem", minWidth: "45%" }}
-        >
-          Confirm
-        </Button>
-
-        <Typography variant="h4" component="h4">Location</Typography>
-
-        <TextField 
-          id="country-field" 
-          label="Country" 
-          variant="outlined" 
-          name="country" 
-          value={address.country} 
-          onChange={handleChange(setAddress)} 
-          sx={{ minWidth: "45%" }}
-        />
-        <TextField 
-          id="street-field" 
-          label="Street" 
-          variant="outlined" 
-          name="street" 
-          value={address.street} 
-          onChange={handleChange(setAddress)} 
-          sx={{ minWidth: "45%" }}
-        />
-        <TextField 
-          id="city-field" 
-          label="City" 
-          variant="outlined" 
-          name="city" 
-          value={address.city} 
-          onChange={handleChange(setAddress)} 
-          sx={{ minWidth: "45%" }}
-        />
-        <TextField 
-          id="state-field" 
-          label="State" 
-          variant="outlined" 
-          name="state" 
-          value={address.state} 
-          onChange={handleChange(setAddress)} 
-          sx={{ minWidth: "45%" }}
-        />
-        <TextField 
-          id="postcode-field" 
-          label="Postcode" 
-          variant="outlined" 
-          name="postcode" 
-          value={address.postcode} 
-          onChange={handleChange(setAddress)} 
-          sx={{ minWidth: "45%" }}
-        />
-        
-        <Typography variant="h4" component="h4">Optional</Typography>
-        <Slide direction="up" in={true} mountOnEnter unmountOnExit>
-          <TextField 
-            id="inspectionNotes-field" 
-            label="Inspection Notes" 
-            variant="outlined" 
-            name="inspectionNotes" 
-            multiline
-            rows={7}  
-            value={inspectionNotes.inspectionNotes} 
-            onChange={handleChange(setInspectionNotes)} 
-            sx={{ minWidth: "45%" }} 
           />
         </Slide>
 
@@ -270,6 +199,77 @@ function Upload() {
           style={{ display: 'none' }}
           multiple
         />
+
+        <Typography variant="h4" component="h4">Location</Typography>
+
+        <TextField 
+          id="country-field" 
+          label="Country" 
+          variant="outlined" 
+          name="country" 
+          value={address.country} 
+          onChange={handleChange(setAddress)} 
+          sx={{ minWidth: "45%" }}
+        />
+        <TextField 
+          id="street-field" 
+          label="Street" 
+          variant="outlined" 
+          name="street" 
+          value={address.street} 
+          onChange={handleChange(setAddress)} 
+          sx={{ minWidth: "45%" }}
+        />
+        <TextField 
+          id="city-field" 
+          label="City" 
+          variant="outlined" 
+          name="city" 
+          value={address.city} 
+          onChange={handleChange(setAddress)} 
+          sx={{ minWidth: "45%" }}
+        />
+        <TextField 
+          id="state-field" 
+          label="State" 
+          variant="outlined" 
+          name="state" 
+          value={address.state} 
+          onChange={handleChange(setAddress)} 
+          sx={{ minWidth: "45%" }}
+        />
+        <TextField 
+          id="postcode-field" 
+          label="Postcode" 
+          variant="outlined" 
+          name="postcode" 
+          value={address.postcode} 
+          onChange={handleChange(setAddress)} 
+          sx={{ minWidth: "45%" }}
+        />
+        
+        <Typography variant="h4" component="h4">Inspection Notes</Typography>
+        <Slide direction="up" in={true} mountOnEnter unmountOnExit>
+          <TextField 
+            id="inspectionNotes-field" 
+            label="Notes" 
+            variant="outlined" 
+            name="inspectionNotes" 
+            multiline
+            rows={7}  
+            value={inspectionNotes.inspectionNotes} 
+            onChange={handleChange(setInspectionNotes)} 
+            sx={{ minWidth: "45%" }} 
+          />
+        </Slide>
+
+        <Button 
+          variant="contained" 
+          onClick={handleConfirm}
+          sx={{ height: "2.7rem", minWidth: "45%", marginBottom: "10px", backgroundColor: "#5865F2" }}
+        >
+          Confirm
+        </Button>
 
         {submitted && <Typography variant="h6">Submitted</Typography>}
       </Stack>

@@ -6,7 +6,6 @@ import {
 } from 'react-router-dom';
 
 import Home from './pages/Home/Home';
-import Alerts from './pages/Alerts/Alerts';
 import Upload from './pages/Upload/Upload';
 import Status from './pages/Status/Status';
 import AssetDetail from './components/AssetDetail/AssetDetail';
@@ -18,7 +17,6 @@ function App() {
       <div></div>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/alerts" element={<Alerts />} />
         <Route path="/upload" element={<Upload />} />
         <Route path="/status" element={<Status />} />
         <Route path="/details/:number" element={<AssetDetail />} />
