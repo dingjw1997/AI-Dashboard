@@ -1,0 +1,65 @@
+C:\Users\gameb\source\repos\API\API\bin\Debug\net6.0\appsettings.Development.json
+C:\Users\gameb\source\repos\API\API\bin\Debug\net6.0\appsettings.json
+C:\Users\gameb\source\repos\API\API\bin\Debug\net6.0\API.staticwebassets.runtime.json
+C:\Users\gameb\source\repos\API\API\bin\Debug\net6.0\API.exe
+C:\Users\gameb\source\repos\API\API\bin\Debug\net6.0\API.deps.json
+C:\Users\gameb\source\repos\API\API\bin\Debug\net6.0\API.runtimeconfig.json
+C:\Users\gameb\source\repos\API\API\bin\Debug\net6.0\API.dll
+C:\Users\gameb\source\repos\API\API\bin\Debug\net6.0\API.pdb
+C:\Users\gameb\source\repos\API\API\obj\Debug\net6.0\API.csproj.AssemblyReference.cache
+C:\Users\gameb\source\repos\API\API\obj\Debug\net6.0\API.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\gameb\source\repos\API\API\obj\Debug\net6.0\API.AssemblyInfoInputs.cache
+C:\Users\gameb\source\repos\API\API\obj\Debug\net6.0\API.AssemblyInfo.cs
+C:\Users\gameb\source\repos\API\API\obj\Debug\net6.0\API.csproj.CoreCompileInputs.cache
+C:\Users\gameb\source\repos\API\API\obj\Debug\net6.0\API.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\gameb\source\repos\API\API\obj\Debug\net6.0\API.RazorAssemblyInfo.cache
+C:\Users\gameb\source\repos\API\API\obj\Debug\net6.0\API.RazorAssemblyInfo.cs
+C:\Users\gameb\source\repos\API\API\obj\Debug\net6.0\staticwebassets.build.json
+C:\Users\gameb\source\repos\API\API\obj\Debug\net6.0\staticwebassets.development.json
+C:\Users\gameb\source\repos\API\API\obj\Debug\net6.0\scopedcss\Pages\Shared\_Layout.cshtml.rz.scp.css
+C:\Users\gameb\source\repos\API\API\obj\Debug\net6.0\scopedcss\bundle\API.styles.css
+C:\Users\gameb\source\repos\API\API\obj\Debug\net6.0\scopedcss\projectbundle\API.bundle.scp.css
+C:\Users\gameb\source\repos\API\API\obj\Debug\net6.0\API.dll
+C:\Users\gameb\source\repos\API\API\obj\Debug\net6.0\refint\API.dll
+C:\Users\gameb\source\repos\API\API\obj\Debug\net6.0\API.pdb
+C:\Users\gameb\source\repos\API\API\obj\Debug\net6.0\API.genruntimeconfig.cache
+C:\Users\gameb\source\repos\API\API\obj\Debug\net6.0\ref\API.dll
+C:\Users\gameb\source\repos\API\API\bin\Debug\net6.0\Syncfusion.Compression.Portable.dll
+C:\Users\gameb\source\repos\API\API\bin\Debug\net6.0\Syncfusion.Licensing.dll
+C:\Users\gameb\source\repos\API\API\bin\Debug\net6.0\Syncfusion.XlsIO.Portable.dll
+C:\Users\gameb\source\repos\API\API\obj\Debug\net6.0\API.csproj.CopyComplete
+C:\Users\Franc\OneDrive\Units\CAPSTONE 2\2023-21-ai-dashboard\API\API\bin\Debug\net6.0\appsettings.Development.json
+C:\Users\Franc\OneDrive\Units\CAPSTONE 2\2023-21-ai-dashboard\API\API\bin\Debug\net6.0\appsettings.json
+C:\Users\Franc\OneDrive\Units\CAPSTONE 2\2023-21-ai-dashboard\API\API\bin\Debug\net6.0\API.staticwebassets.runtime.json
+C:\Users\Franc\OneDrive\Units\CAPSTONE 2\2023-21-ai-dashboard\API\API\bin\Debug\net6.0\API.exe
+C:\Users\Franc\OneDrive\Units\CAPSTONE 2\2023-21-ai-dashboard\API\API\bin\Debug\net6.0\API.deps.json
+C:\Users\Franc\OneDrive\Units\CAPSTONE 2\2023-21-ai-dashboard\API\API\bin\Debug\net6.0\API.runtimeconfig.json
+C:\Users\Franc\OneDrive\Units\CAPSTONE 2\2023-21-ai-dashboard\API\API\bin\Debug\net6.0\API.dll
+C:\Users\Franc\OneDrive\Units\CAPSTONE 2\2023-21-ai-dashboard\API\API\bin\Debug\net6.0\API.pdb
+C:\Users\Franc\OneDrive\Units\CAPSTONE 2\2023-21-ai-dashboard\API\API\bin\Debug\net6.0\Syncfusion.Compression.Portable.dll
+C:\Users\Franc\OneDrive\Units\CAPSTONE 2\2023-21-ai-dashboard\API\API\bin\Debug\net6.0\Syncfusion.Licensing.dll
+C:\Users\Franc\OneDrive\Units\CAPSTONE 2\2023-21-ai-dashboard\API\API\bin\Debug\net6.0\Syncfusion.XlsIO.Portable.dll
+C:\Users\Franc\OneDrive\Units\CAPSTONE 2\2023-21-ai-dashboard\API\API\obj\Debug\net6.0\API.csproj.AssemblyReference.cache
+C:\Users\Franc\OneDrive\Units\CAPSTONE 2\2023-21-ai-dashboard\API\API\obj\Debug\net6.0\API.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Franc\OneDrive\Units\CAPSTONE 2\2023-21-ai-dashboard\API\API\obj\Debug\net6.0\API.AssemblyInfoInputs.cache
+C:\Users\Franc\OneDrive\Units\CAPSTONE 2\2023-21-ai-dashboard\API\API\obj\Debug\net6.0\API.AssemblyInfo.cs
+C:\Users\Franc\OneDrive\Units\CAPSTONE 2\2023-21-ai-dashboard\API\API\obj\Debug\net6.0\API.csproj.CoreCompileInputs.cache
+C:\Users\Franc\OneDrive\Units\CAPSTONE 2\2023-21-ai-dashboard\API\API\obj\Debug\net6.0\API.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Franc\OneDrive\Units\CAPSTONE 2\2023-21-ai-dashboard\API\API\obj\Debug\net6.0\API.RazorAssemblyInfo.cache
+C:\Users\Franc\OneDrive\Units\CAPSTONE 2\2023-21-ai-dashboard\API\API\obj\Debug\net6.0\API.RazorAssemblyInfo.cs
+C:\Users\Franc\OneDrive\Units\CAPSTONE 2\2023-21-ai-dashboard\API\API\obj\Debug\net6.0\staticwebassets\msbuild.API.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\Franc\OneDrive\Units\CAPSTONE 2\2023-21-ai-dashboard\API\API\obj\Debug\net6.0\staticwebassets\msbuild.build.API.props
+C:\Users\Franc\OneDrive\Units\CAPSTONE 2\2023-21-ai-dashboard\API\API\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.API.props
+C:\Users\Franc\OneDrive\Units\CAPSTONE 2\2023-21-ai-dashboard\API\API\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.API.props
+C:\Users\Franc\OneDrive\Units\CAPSTONE 2\2023-21-ai-dashboard\API\API\obj\Debug\net6.0\staticwebassets.pack.json
+C:\Users\Franc\OneDrive\Units\CAPSTONE 2\2023-21-ai-dashboard\API\API\obj\Debug\net6.0\staticwebassets.build.json
+C:\Users\Franc\OneDrive\Units\CAPSTONE 2\2023-21-ai-dashboard\API\API\obj\Debug\net6.0\staticwebassets.development.json
+C:\Users\Franc\OneDrive\Units\CAPSTONE 2\2023-21-ai-dashboard\API\API\obj\Debug\net6.0\scopedcss\Pages\Shared\_Layout.cshtml.rz.scp.css
+C:\Users\Franc\OneDrive\Units\CAPSTONE 2\2023-21-ai-dashboard\API\API\obj\Debug\net6.0\scopedcss\bundle\API.styles.css
+C:\Users\Franc\OneDrive\Units\CAPSTONE 2\2023-21-ai-dashboard\API\API\obj\Debug\net6.0\scopedcss\projectbundle\API.bundle.scp.css
+C:\Users\Franc\OneDrive\Units\CAPSTONE 2\2023-21-ai-dashboard\API\API\obj\Debug\net6.0\API.csproj.CopyComplete
+C:\Users\Franc\OneDrive\Units\CAPSTONE 2\2023-21-ai-dashboard\API\API\obj\Debug\net6.0\API.dll
+C:\Users\Franc\OneDrive\Units\CAPSTONE 2\2023-21-ai-dashboard\API\API\obj\Debug\net6.0\refint\API.dll
+C:\Users\Franc\OneDrive\Units\CAPSTONE 2\2023-21-ai-dashboard\API\API\obj\Debug\net6.0\API.pdb
+C:\Users\Franc\OneDrive\Units\CAPSTONE 2\2023-21-ai-dashboard\API\API\obj\Debug\net6.0\API.genruntimeconfig.cache
+C:\Users\Franc\OneDrive\Units\CAPSTONE 2\2023-21-ai-dashboard\API\API\obj\Debug\net6.0\ref\API.dll

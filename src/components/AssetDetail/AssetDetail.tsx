@@ -56,7 +56,8 @@ const AssetDetail = () => {
     };
 
     fetchData();
-  }, []);
+  }, 
+);
 
   // Styling for the grid items
   const gridItemStyles = {
