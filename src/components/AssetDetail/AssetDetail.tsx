@@ -223,7 +223,7 @@ const AssetDetail = () => {
 
       <Grow in timeout={1100}>
         <Box sx={{ mt: 5, display: 'flex', justifyContent: 'center', width: '100%' }}>
-          <Paper sx={{ ...gridItemStyles, width: '70%', padding: 2 }}>
+          <Paper sx={{ ...gridItemStyles, width: '70%', padding: 2, minHeight: '300px' }}>
             <Typography variant="h4" component="h4" textAlign="center" pb={2} gutterBottom>
               Inspection Notes
             </Typography>
@@ -236,11 +236,11 @@ const AssetDetail = () => {
 
       <Grow in timeout={1300}>
         <Box sx={{ mt: 5, display: 'flex', justifyContent: 'center', width: '100%' }}>
-          <Paper sx={{ ...gridItemStyles, width: '70%', padding: 2 }}>
+          <Paper sx={{ ...gridItemStyles, width: '70%', padding: 2, minHeight: '400px' }}>
             <Typography variant="h4" component="h4" textAlign="center" pb={2} gutterBottom>
               Image Gallery
             </Typography>
-            <ImageList cols={4} rowHeight={164}>
+            <ImageList cols={2} rowHeight={164}>
               {placeholderImages.length > 0 ? (
                 placeholderImages.map((image, index) => (
                   <ImageListItem key={index}>
