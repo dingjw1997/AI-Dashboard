@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, CardActionArea, CardContent, Stack, Typography, Grid, Grow, Paper } from '@mui/material';
 import Header from '../../components/Header/Header';
 import BasicTable from '../../components/BasicTable/BasicTable';
 import GoogleMap from '../../components/GoogleMap/GoogleMap';
+import firebase from '../../components/Database/FirebaseDatabase';
+import { Asset, Upload, Address } from '../../models/Asset';
 
 const gridItemStyles = {
   overflowX: 'hidden',
@@ -23,7 +25,50 @@ const gridItemStyles = {
 const center = { lat: -31.953512, lng: 115.857048 }; // Perth, WA Coordinates
 const zoom = 12; 
 
+const conditionOrder = ["Urgent Inspection", "Requires Inspection", "Poor", "Good", "Excellent"];
+
+const getCriticalAssets = (uploads: Upload[]): Asset[] => {
+  const rows: Asset[] = uploads.map((upload, index) => {
+    const location: Address = {
+      country: upload.address.country,
+      state: upload.address.state,
+      city: upload.address.city,
+      street: upload.address.street,
+      postcode: upload.address.postcode,
+    };
+
+    const asset: Asset = {
+      name: upload.assetInfo?.assetName || 'N/A',
+      number: index + 1,
+      condition: upload.assetInfo?.assetCondition || 'N/A',
+      material: upload.assetInfo?.assetMaterialType || 'N/A',
+      lastInspectionDate: upload.dateInfo?.dateLastInspected || 'N/A',
+      lastUploadDate: upload.dateInfo?.dateUploaded || 'N/A',
+      location: location,
+      inspectionNotes: upload.inspectionNotes?.inspectionNotes || 'N/A',
+    };
+
+    return asset;
+  });
+
+  return rows
+    .sort((a, b) => conditionOrder.indexOf(a.condition) - conditionOrder.indexOf(b.condition))
+    .slice(0, 5);
+};
+
 function Home() {
+  const [criticalAssets, setCriticalAssets] = useState<Asset[]>([]);
+
+  useEffect(() => {
+    const dbRef = firebase.database().ref('uploads');
+    dbRef.on('value', (snapshot) => {
+      const data = snapshot.val();
+      const uploadsArray: Upload[] = data ? Object.keys(data).map(key => ({ id: key, ...data[key] })) : [];
+      const criticalAssets = getCriticalAssets(uploadsArray);
+      setCriticalAssets(criticalAssets);
+    });
+  }, []);
+
   return (
     <div>
       <Header />
@@ -32,49 +77,24 @@ function Home() {
         <Grid item xs={5}>
           <Grow in timeout={500}>
             <Paper sx={gridItemStyles}>
-            <Typography variant="h4" component="h4" textAlign="center" gutterBottom>Asset Condition</Typography>
-            <Stack direction="column" spacing={2} sx={gridItemStyles}>
-              <Card variant="outlined">
-                <CardActionArea href="/zone/1">
-                  <CardContent>
-                    <Typography variant="h5" component="h2">Zone 1</Typography>
-                    <Typography variant="body2" color="textSecondary">Details about the alert...</Typography>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-              <Card variant="outlined">
-                <CardActionArea href="/zone/2">
-                  <CardContent>
-                    <Typography variant="h5" component="h2">Zone 2</Typography>
-                    <Typography variant="body2" color="textSecondary">Details about the alert...</Typography>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-              <Card variant="outlined">
-                <CardActionArea href="/zone/3">
-                  <CardContent>
-                    <Typography variant="h5" component="h2">Zone 3</Typography>
-                    <Typography variant="body2" color="textSecondary">Details about the alert...</Typography>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-              <Card variant="outlined">
-                <CardActionArea href="/zone/4">
-                  <CardContent>
-                    <Typography variant="h5" component="h2">Zone 4</Typography>
-                    <Typography variant="body2" color="textSecondary">Details about the alert...</Typography>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-              <Card variant="outlined">
-                <CardActionArea href="/zone/5">
-                  <CardContent>
-                    <Typography variant="h5" component="h2">Zone 5</Typography>
-                    <Typography variant="body2" color="textSecondary">Details about the alert...</Typography>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-            </Stack>
+              <Typography variant="h4" component="h4" textAlign="center" gutterBottom>Asset Condition</Typography>
+              <Stack direction="column" spacing={2} sx={gridItemStyles}>
+                {criticalAssets.length > 0 ? (
+                  criticalAssets.map((asset, index) => (
+                    <Card key={index} variant="outlined">
+                      <CardActionArea href={`/details/${asset.name}`}>
+                        <CardContent>
+                          <Typography variant="h5" component="h2">{asset.name}</Typography>
+                          <Typography variant="body2" color="textSecondary">Condition: {asset.condition}</Typography>
+                          <Typography variant="body2" color="textSecondary">Last Inspection: {asset.lastInspectionDate}</Typography>
+                        </CardContent>
+                      </CardActionArea>
+                    </Card>
+                  ))
+                ) : (
+                  <Typography variant="body2" color="textSecondary" textAlign="center">No critical assets found.</Typography>
+                )}
+              </Stack>
             </Paper>
           </Grow>
         </Grid>
@@ -104,5 +124,3 @@ function Home() {
 }
 
 export default Home;
-
-
