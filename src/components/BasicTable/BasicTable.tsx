@@ -8,7 +8,8 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useNavigate } from 'react-router-dom';
 import { Location, Asset } from  '../../models/Asset';
-import firebase from '../Database/FirebaseDatabase'; 
+import { database, dbRef } from '../../components/Database/FirebaseDatabase';
+import { onValue } from 'firebase/database'; 
 
 
 type Column = 'Asset' | 'No.' | 'Condition' | 'Location' | 'Material' | 'Last Inspection Date' | 'Last Upload Date';
@@ -22,10 +23,10 @@ function BasicTable({ columnsToShow = [] }: BasicTableProps) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const dbRef = firebase.database().ref('uploads');
-    dbRef.on('value', (snapshot) => {
+    const uploadsRef = dbRef(database, 'uploads');
+    onValue(uploadsRef, (snapshot: any) => { 
       const data = snapshot.val();
-      console.log(data); // Log the fetched data to see its structure
+      console.log(data);
       const uploadsArray = data ? Object.keys(data).map(key => ({ id: key, ...data[key] })) : [];
       setUploads(uploadsArray);
     });
@@ -39,15 +40,17 @@ function BasicTable({ columnsToShow = [] }: BasicTableProps) {
       upload.address.street,
       upload.address.postcode
     );
+
     const asset = new Asset(
       upload.assetInfo?.assetName || 'N/A',
-      index + 1, 
-      upload.assetInfo?.assetCondition || 'N/A', 
+      index + 1,
+      upload.assetInfo?.assetCondition || 'N/A',
       upload.assetInfo?.assetMaterialType || 'N/A',
       upload.dateInfo?.dateLastInspected || 'N/A',
       upload.dateInfo?.dateUploaded || 'N/A',
       location,
-      upload.inspectionNotes?.inspectionNotes || 'N/A'
+      upload.inspectionNotes?.inspectionNotes || 'N/A',
+      upload.photoURLs || [] 
     );
     return asset;
   });

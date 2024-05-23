@@ -171,13 +171,7 @@ const AssetDetail = () => {
   );
 
   const inspectionNotes = assetDetails ? assetDetails.inspectionNotes : 'No notes available';
-
-  const placeholderImages = [
-    'https://via.placeholder.com/150',
-    'https://via.placeholder.com/150',
-    'https://via.placeholder.com/150',
-    'https://via.placeholder.com/150'
-  ];
+  const images = assetDetails ? assetDetails.photoURLs : [];
 
   return (
     <div>
@@ -236,15 +230,27 @@ const AssetDetail = () => {
 
       <Grow in timeout={1300}>
         <Box sx={{ mt: 5, display: 'flex', justifyContent: 'center', width: '100%' }}>
-          <Paper sx={{ ...gridItemStyles, width: '70%', padding: 2, minHeight: '400px' }}>
+          <Paper sx={{ ...gridItemStyles, width: '70%', padding: 2 }}>
             <Typography variant="h4" component="h4" textAlign="center" pb={2} gutterBottom>
               Image Gallery
             </Typography>
-            <ImageList cols={2} rowHeight={164}>
-              {placeholderImages.length > 0 ? (
-                placeholderImages.map((image, index) => (
-                  <ImageListItem key={index}>
-                    <img src={image} alt={`Placeholder ${index}`} loading="lazy" />
+            <ImageList sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
+              {images.length > 0 ? (
+                images.map((image, index) => (
+                  <ImageListItem key={index} sx={{ flexBasis: '25%', marginBottom: 2 }}>
+                    <Box
+                      component="img"
+                      src={image}
+                      alt={`Asset Image ${index}`}
+                      loading="lazy"
+                      sx={{
+                        width: '100%',
+                        height: 'auto',
+                        maxHeight: 200, // Setting a maximum height for images
+                        borderRadius: 2,
+                        boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
+                      }}
+                    />
                   </ImageListItem>
                 ))
               ) : (

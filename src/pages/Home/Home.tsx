@@ -3,7 +3,8 @@ import { Card, CardActionArea, CardContent, Stack, Typography, Grid, Grow, Paper
 import Header from '../../components/Header/Header';
 import BasicTable from '../../components/BasicTable/BasicTable';
 import GoogleMap from '../../components/GoogleMap/GoogleMap';
-import firebase from '../../components/Database/FirebaseDatabase';
+import { database, dbRef } from '../../components/Database/FirebaseDatabase';
+import { onValue } from 'firebase/database'; 
 import { Asset, Upload, Address } from '../../models/Asset';
 
 const gridItemStyles = {
@@ -40,12 +41,13 @@ const getCriticalAssets = (uploads: Upload[]): Asset[] => {
     const asset: Asset = {
       name: upload.assetInfo?.assetName || 'N/A',
       number: index + 1,
-      condition: upload.assetInfo?.assetCondition || 'N/A',
+      condition: upload.assetInfo?.assetCondition || 'N/A', 
       material: upload.assetInfo?.assetMaterialType || 'N/A',
       lastInspectionDate: upload.dateInfo?.dateLastInspected || 'N/A',
       lastUploadDate: upload.dateInfo?.dateUploaded || 'N/A',
       location: location,
       inspectionNotes: upload.inspectionNotes?.inspectionNotes || 'N/A',
+      photoURLs: upload.photoURLs || '', 
     };
 
     return asset;
@@ -60,8 +62,8 @@ function Home() {
   const [criticalAssets, setCriticalAssets] = useState<Asset[]>([]);
 
   useEffect(() => {
-    const dbRef = firebase.database().ref('uploads');
-    dbRef.on('value', (snapshot) => {
+    const uploadsRef = dbRef(database, 'uploads');
+    onValue(uploadsRef, (snapshot: any) => {
       const data = snapshot.val();
       const uploadsArray: Upload[] = data ? Object.keys(data).map(key => ({ id: key, ...data[key] })) : [];
       const criticalAssets = getCriticalAssets(uploadsArray);

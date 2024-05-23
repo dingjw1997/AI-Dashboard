@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -7,6 +7,9 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
+import { database, dbRef } from '../../components/Database/FirebaseDatabase';
+import { onValue } from 'firebase/database'; 
+import { Asset, Upload, Address } from '../../models/Asset';
 
 interface DropdownItem {
   href: string;
@@ -19,19 +22,60 @@ interface NavLink {
   dropdown?: DropdownItem[];
 }
 
+const conditionOrder = ["Urgent Inspection", "Requires Inspection", "Poor", "Good", "Excellent"];
+
+const getCriticalAssets = (uploads: Upload[]): Asset[] => {
+  const rows: Asset[] = uploads.map((upload, index) => {
+    const location: Address = {
+      country: upload.address.country,
+      state: upload.address.state,
+      city: upload.address.city,
+      street: upload.address.street,
+      postcode: upload.address.postcode,
+    };
+
+    const asset: Asset = {
+      name: upload.assetInfo?.assetName || 'N/A',
+      number: index + 1,
+      condition: upload.assetInfo?.assetCondition || 'N/A', 
+      material: upload.assetInfo?.assetMaterialType || 'N/A',
+      lastInspectionDate: upload.dateInfo?.dateLastInspected || 'N/A',
+      lastUploadDate: upload.dateInfo?.dateUploaded || 'N/A',
+      location: location,
+      inspectionNotes: upload.inspectionNotes?.inspectionNotes || 'N/A',
+      photoURLs: upload.photoURLs || '', 
+    };
+
+    return asset;
+  });
+
+  return rows
+    .sort((a, b) => conditionOrder.indexOf(a.condition) - conditionOrder.indexOf(b.condition))
+    .slice(0, 5);
+};
+
 const Header: React.FC = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [criticalAssets, setCriticalAssets] = useState<Asset[]>([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const uploadsRef = dbRef(database, 'uploads');
+    onValue(uploadsRef, (snapshot: any) => {
+      const data = snapshot.val();
+      const uploadsArray: Upload[] = data ? Object.keys(data).map(key => ({ id: key, ...data[key] })) : [];
+      const criticalAssets = getCriticalAssets(uploadsArray);
+      setCriticalAssets(criticalAssets);
+    });
+  }, []);
 
   const navLinks: NavLink[] = [
     {
       text: "Alerts",
-      dropdown: [
-        { href: "/zone/1", text: "Zone 1" },
-        { href: "/zone/2", text: "Zone 2" },
-        { href: "/zone/1", text: "Zone 3" },
-        { href: "/zone/2", text: "Zone 4" },
-      ],
+      dropdown: criticalAssets.map(asset => ({
+        href: `/details/${asset.name}`,
+        text: asset.name
+      })),
     },
     { href: "/upload/", text: "Upload" },
     { href: "/status/", text: "Inventory" },
@@ -47,8 +91,8 @@ const Header: React.FC = () => {
   };
 
   const handleLogoClick = () => {
-    navigate("/")
-  }
+    navigate("/");
+  };
 
   return (
     <AppBar position="static">
@@ -99,7 +143,7 @@ const Header: React.FC = () => {
                   onClose={handleMenuClose}
                 >
                   {link.dropdown.map((item, idx) => (
-                    <MenuItem key={idx} onClick={handleMenuClose}>
+                    <MenuItem key={idx} onClick={() => { handleMenuClose(); navigate(item.href); }}>
                       {item.text}
                     </MenuItem>
                   ))}
@@ -112,7 +156,6 @@ const Header: React.FC = () => {
             )
           ))}
         </div>
-
       </Toolbar>
     </AppBar>
   );

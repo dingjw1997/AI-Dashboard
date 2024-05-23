@@ -1,7 +1,8 @@
 import React, { useRef, useState } from 'react';
 import { TextField, MenuItem, FormControl, InputLabel, Stack, Typography, Button, Slide, Select, SelectChangeEvent } from '@mui/material';
 import Header from '../../components/Header/Header';
-import firebase from '../../components/Database/FirebaseDatabase';
+import { storage, database, dbRef, push, ref, uploadBytes, getDownloadURL } from '../../components/Database/FirebaseDatabase';
+
 
 function Upload() {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -34,11 +35,10 @@ function Upload() {
   });
 
   const [submitted, setSubmitted] = useState(false);
+  const [photoURLs, setPhotoURLs] = useState<string[]>([]);
 
-  // Type definition for event parameter
   type ChangeEvent = React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>;
 
-  // Generic handleChange function for input fields
   const handleChange = (setState: React.Dispatch<React.SetStateAction<any>>) => (e: ChangeEvent) => {
     const { name, value } = e.target;
     setState((prevState: any) => ({ ...prevState, [name]: value }));
@@ -46,34 +46,50 @@ function Upload() {
 
   const handleConfirm = async () => {
     try {
-      // API call to get the asset condition
       const response = await fetch(`https://localhost:7037/api/prediction/2024-05-23 12:00:00`);
       if (!response.ok) throw new Error('Failed to fetch asset condition');
-      const condition = await response.text(); // Assuming the response is plain text
+      const condition = await response.text(); 
 
       const dataToSend = {
         inspectionNotes,
         assetInfo: {
           ...assetInfo,
-          assetCondition: condition, // Update the condition from the API
+          assetCondition: condition,
         },
         dateInfo,
         address,
+        photoURLs,
       };
 
-      const dbRef = firebase.database().ref('uploads');
-      dbRef.push(dataToSend);
+      const dbUploadsRef = dbRef(database, 'uploads');
+      push(dbUploadsRef, dataToSend);
       console.log('Data Submitted:', dataToSend);
       setSubmitted(true);
-      setTimeout(() => resetForm(), 1000);
+      setTimeout(() => resetForm(), 3000);
     } catch (error) {
       console.error('Error:', error);
       alert(error);
     }
   };
 
-  const handlePhotoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('Photo Uploaded:', event.target.files && event.target.files[0]);
+  const uploadFile = async (file: File) => {
+    const storageRef = ref(storage, `photos/${file.name}`);
+    await uploadBytes(storageRef, file);
+    const downloadURL = await getDownloadURL(storageRef);
+    return downloadURL;
+  };
+
+  const handlePhotoUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (files) {
+      const urls: string[] = [];
+      const fileArray = Array.from(files); 
+      for (const file of fileArray) {
+        const url = await uploadFile(file);
+        urls.push(url);
+      }
+      setPhotoURLs(urls);
+    }
   };
 
   const handleMeasurementUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -101,6 +117,7 @@ function Upload() {
       postcode: ''
     });
     setSubmitted(false);
+    setPhotoURLs([]);
   };
 
   return (

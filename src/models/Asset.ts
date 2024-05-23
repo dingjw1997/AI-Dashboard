@@ -17,7 +17,8 @@ export class Asset {
     public lastInspectionDate: string,
     public lastUploadDate: string,
     public location: Location,
-    public inspectionNotes: string
+    public inspectionNotes: string,
+    public photoURLs: string[] 
   ) {}
 }
 
@@ -49,4 +50,5 @@ export interface Upload {
   inspectionNotes: {
     inspectionNotes: string;
   };
+  photoURLs: string[];
 }
