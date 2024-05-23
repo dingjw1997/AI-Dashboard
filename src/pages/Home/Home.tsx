@@ -6,6 +6,7 @@ import GoogleMap from '../../components/GoogleMap/GoogleMap';
 import { database, dbRef } from '../../components/Database/FirebaseDatabase';
 import { onValue } from 'firebase/database'; 
 import { Asset, Upload, Address } from '../../models/Asset';
+import { useNavigate } from 'react-router-dom';
 
 const gridItemStyles = {
   overflowX: 'hidden',
@@ -47,7 +48,7 @@ const getCriticalAssets = (uploads: Upload[]): Asset[] => {
       lastUploadDate: upload.dateInfo?.dateUploaded || 'N/A',
       location: location,
       inspectionNotes: upload.inspectionNotes?.inspectionNotes || 'N/A',
-      photoURLs: upload.photoURLs || '', 
+      photoURLs: upload.photoURLs || [], 
     };
 
     return asset;
@@ -60,6 +61,7 @@ const getCriticalAssets = (uploads: Upload[]): Asset[] => {
 
 function Home() {
   const [criticalAssets, setCriticalAssets] = useState<Asset[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const uploadsRef = dbRef(database, 'uploads');
@@ -70,6 +72,11 @@ function Home() {
       setCriticalAssets(criticalAssets);
     });
   }, []);
+
+  const handleCardClick = (asset: Asset) => {
+    localStorage.setItem('currentAssetDetails', JSON.stringify(asset));
+    navigate(`/details/${asset.name}`);
+  };
 
   return (
     <div>
@@ -84,7 +91,7 @@ function Home() {
                 {criticalAssets.length > 0 ? (
                   criticalAssets.map((asset, index) => (
                     <Card key={index} variant="outlined">
-                      <CardActionArea href={`/details/${asset.name}`}>
+                      <CardActionArea onClick={() => handleCardClick(asset)}>
                         <CardContent>
                           <Typography variant="h5" component="h2">{asset.name}</Typography>
                           <Typography variant="body2" color="textSecondary">Condition: {asset.condition}</Typography>

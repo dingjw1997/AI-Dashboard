@@ -37,13 +37,13 @@ const getCriticalAssets = (uploads: Upload[]): Asset[] => {
     const asset: Asset = {
       name: upload.assetInfo?.assetName || 'N/A',
       number: index + 1,
-      condition: upload.assetInfo?.assetCondition || 'N/A', 
+      condition: upload.assetInfo?.assetCondition || 'N/A',
       material: upload.assetInfo?.assetMaterialType || 'N/A',
       lastInspectionDate: upload.dateInfo?.dateLastInspected || 'N/A',
       lastUploadDate: upload.dateInfo?.dateUploaded || 'N/A',
       location: location,
       inspectionNotes: upload.inspectionNotes?.inspectionNotes || 'N/A',
-      photoURLs: upload.photoURLs || '', 
+      photoURLs: upload.photoURLs || [], 
     };
 
     return asset;
@@ -91,8 +91,8 @@ const Header: React.FC = () => {
   };
 
   const handleLogoClick = () => {
-    navigate("/");
-  };
+    navigate("/")
+  }
 
   return (
     <AppBar position="static">
@@ -143,7 +143,14 @@ const Header: React.FC = () => {
                   onClose={handleMenuClose}
                 >
                   {link.dropdown.map((item, idx) => (
-                    <MenuItem key={idx} onClick={() => { handleMenuClose(); navigate(item.href); }}>
+                    <MenuItem key={idx} onClick={() => { 
+                      handleMenuClose(); 
+                      const asset = criticalAssets.find(a => a.name === item.text);
+                      if (asset) {
+                        localStorage.setItem('currentAssetDetails', JSON.stringify(asset));
+                      }
+                      navigate(item.href); 
+                    }}>
                       {item.text}
                     </MenuItem>
                   ))}
@@ -156,6 +163,7 @@ const Header: React.FC = () => {
             )
           ))}
         </div>
+
       </Toolbar>
     </AppBar>
   );
