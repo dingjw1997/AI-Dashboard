@@ -1,0 +1,21 @@
+.logo {
+    max-height: 60px;
+}
+
+.nav-link {
+    white-space: nowrap;
+}
+
+.redZone {
+    color: red !important; /* Add !important to ensure it overrides other styles */
+}
+
+.brandContainer {
+    display: flex;
+    align-items: center;
+  }
+  
+.pageName {
+    margin-left: 10px; /* Adjust as needed */
+    font-weight: bold; /* Adjust styling as needed */
+  }
