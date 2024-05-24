@@ -29,13 +29,20 @@ namespace API
         }
 
         // GET api/<ValuesController>/5
-        [HttpGet("{date}/{x}/{y}")]
-        public string Predict(string date, int x, int y)
+        [HttpGet("{date}/{y}/{width}")]
+        public string Predict(string date, int y, int width)
         {
             if (DateTime.TryParseExact(date, "yyyy-MM-dd HH:mm:ss", null, System.Globalization.DateTimeStyles.None, out DateTime predictTime))
-                return $"{PredictionController.Data.Predict(predictTime, x, y)}";
+                return $"{PredictionController.Data.Predict(predictTime, y, width)}";
             else
                 return "Invalid Date";
+        }
+
+        [HttpGet("upload/{*filepath}")]
+        public string GetNewCondition(string filepath)
+        {
+            Console.WriteLine(filepath);
+            return PredictionController.Data.GetAverage(filepath);
         }
 
         // POST api/<ValuesController>
@@ -78,7 +85,7 @@ namespace API
             private DateTime _startTime = DateTime.Now;
 
             private float[,] _rateOfChange;
-            private float _averageRateOfChange;
+            private float _averageRateOfChange; 
 
 
             //Converting range values into 2 dimensional array
@@ -109,6 +116,60 @@ namespace API
                     Console.Write("\n______________________________________________\n");
                 }
                 _averageRateOfChange += averageForSpreadsheet / ((endRow - startRow) * (endCol - startCol));
+            }
+
+            public float UnpackAverageValues(IWorksheet worksheet, IRange range)
+            {
+                int startRow = range.Row;
+                int startCol = range.Column;
+                int endRow = range.LastRow;
+                int endCol = range.LastColumn;
+                float averageForSpreadsheet = 0f;
+                //float[,] numbers = new float[endRow - startRow + 1, endCol - startCol + 1];
+
+                for (int x = 0; x <= endRow - startRow; x++)
+                {
+                    for (int y = 0; y <= endCol - startCol; y++)
+                    {
+                        if (float.TryParse(worksheet[startRow + x, startCol + y].Value, out float value))
+                        {
+                            averageForSpreadsheet += value;
+                        }
+                        else
+                            Console.Write($"Invalid Value At Line {x} {y}");
+                    }
+                }
+                return averageForSpreadsheet / ((endRow - startRow) * (endCol - startCol));
+            }
+
+            public string GetAverage(string filePath)
+            {
+                ExcelEngine excelEngine = new ExcelEngine();
+
+                IApplication application = excelEngine.Excel;
+                application.DefaultVersion = ExcelVersion.Xlsx;
+                if (System.IO.File.Exists(filePath))
+                {
+                    lock (fileLock)
+                    {
+                        using (FileStream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+                        {
+                            IWorkbook workbook = application.Workbooks.Open(fileStream);
+                            IWorksheet worksheet = workbook.Worksheets[0];
+
+                            IRange range = worksheet["A1:IQ164"];
+                            float average = UnpackAverageValues(worksheet, range);
+                            foreach (string condition in _conditionThresholds.Keys)
+                            {
+                                if (average >= _conditionThresholds[condition])
+                                    return condition;
+                            }
+                        }
+                    }
+                }
+                else
+                    Console.Write($"Missing File At Path {filePath}\n");
+                return "";
             }
 
             public void Initialize()
@@ -155,17 +216,17 @@ namespace API
             }
 
 
-            public float Predict(DateTime time, int positionX, int positionY)
+            public float Predict(DateTime time, int positionY, int width)
             {
                 int totalCount = 0;
                 float total = 0;
-                for (int x = positionX - 5; x < positionX + 5; x++)
+                for (int x = -(int)(width * 0.5); x < (int)(width * 0.5); x++)
                 {
                     for (int y = positionY - 5; y < positionY + 5; y++)
                     {
                         if (x > 0 && x < X_SIZE && y > 0 && y < Y_SIZE)
                         {
-                            total += _rateOfChange[positionX, positionY];
+                            total += _rateOfChange[125, positionY];
                             totalCount++;
                         }
                     }

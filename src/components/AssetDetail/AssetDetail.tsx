@@ -56,7 +56,7 @@ const AssetDetail = () => {
     };
 
     fetchData();
-  }, []);
+  }, );
 
   // Styling for the grid items
   const gridItemStyles = {
@@ -177,21 +177,41 @@ const AssetDetail = () => {
     <div>
       <Header />
       <Grid container pt={3} px={3} gap={3} justifyContent="center">
-        <Grid item xs={5}>
-          <Grow in timeout={500}>
-            <Paper sx={gridItemStyles}>
-              <Typography variant="h4" component="h4" textAlign="center" pb={2} gutterBottom>
-                Asset Condition
-              </Typography>
-              <Box sx={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                {chartData ? (
-                  <Line data={chartData} options={options} />
-                ) : (
-                  <Typography variant="body1" textAlign="center">Loading chart data...</Typography>
-                )}
-              </Box>
-            </Paper>
-          </Grow>
+        <Grid item xs={5} direction="column">
+          <Grid>
+            <Grow in timeout={500}>
+              <Paper sx={gridItemStyles}>
+                <Typography variant="h4" component="h4" textAlign="center" pb={2} gutterBottom>
+                  Asset Condition
+                </Typography>
+                <Box sx={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                  {chartData ? (
+                    <Line data={chartData} options={options} />
+                  ) : (
+                    <Typography variant="body1" textAlign="center">Loading chart data...</Typography>
+                  )}
+                </Box>
+              </Paper>
+            </Grow>
+          </Grid>
+
+          <Grid>
+            <Grow in timeout={500}>
+              <Paper sx={gridItemStyles}>
+                <Typography variant="h4" component="h4" textAlign="center" pb={2} gutterBottom>
+                  Asset Condition
+                </Typography>
+                <Box sx={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                  {chartData ? (
+                    <Line data={chartData} options={options} />
+                  ) : (
+                    <Typography variant="body1" textAlign="center">Loading chart data...</Typography>
+                  )}
+                </Box>
+              </Paper>
+            </Grow>
+          </Grid>
+
         </Grid>
 
         <Grid item xs={6} container direction="column" gap={3}>
