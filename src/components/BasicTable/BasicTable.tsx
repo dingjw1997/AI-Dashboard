@@ -89,7 +89,90 @@ function BasicTable({ columnsToShow = [] }: BasicTableProps) {
             >
               {columnsToShow.includes('Asset') && <TableCell component="th" scope="row">{row.name}</TableCell>}
               {columnsToShow.includes('No.') && <TableCell align="right">{row.number}</TableCell>}
-              {columnsToShow.includes('Condition') && <TableCell align="right">{row.condition}</TableCell>}
+              {columnsToShow.includes('Condition') && (
+  <TableCell align="left" style={{ display: 'flex', alignItems: 'center' }}>
+    {row.condition.toLowerCase() === 'excellent' && (
+      <span
+        style={{
+          display: 'inline-block',
+          width: 14,
+          height: 14,
+          borderRadius: '50%',
+          backgroundColor: 'green',
+          marginRight: 8,
+        }}
+      ></span>
+    )}
+    {row.condition.toLowerCase() === 'good' && (
+      <span
+        style={{
+          display: 'inline-block',
+          width: 14,
+          height: 14,
+          borderRadius: '50%',
+          backgroundColor: 'lightgreen',
+          marginRight: 8,
+        }}
+      ></span>
+    )}
+    {row.condition.toLowerCase() === 'requires inspection' && (
+      <span
+        style={{
+          display: 'inline-block',
+          width: 14,
+          height: 14,
+          borderRadius: '50%',
+          backgroundColor: 'orange',
+          marginRight: 8,
+        }}
+      ></span>
+    )}
+    {row.condition.toLowerCase() === 'poor' && (
+      <span
+        style={{
+          display: 'inline-block',
+          width: 14,
+          height: 14,
+          borderRadius: '50%',
+          backgroundColor: 'red',
+          marginRight: 8,
+        }}
+      ></span>
+    )}
+    {row.condition.toLowerCase() === 'urgent inspection' && (
+      <span
+        style={{
+          display: 'inline-block',
+          width: 20, // larger circle for urgent inspection
+          height: 20, // larger circle for urgent inspection
+          borderRadius: '50%',
+          backgroundColor: 'red',
+          marginRight: 8,
+        }}
+      ></span>
+    )}
+    <span
+      style={{
+        color:
+          row.condition.toLowerCase() === 'excellent'
+            ? 'green'
+            : row.condition.toLowerCase() === 'good'
+            ? 'lightgreen'
+            : row.condition.toLowerCase() === 'requires inspection'
+            ? 'orange'
+            : row.condition.toLowerCase() === 'poor'
+            ? 'red'
+            : row.condition.toLowerCase() === 'urgent inspection'
+            ? 'red'
+            : 'inherit',
+      }}
+    >
+      {row.condition}
+    </span>
+  </TableCell>
+)}
+
+
               {columnsToShow.includes('Location') && <TableCell align="right">{`${row.location.city}, ${row.location.state}`}</TableCell>}
               {columnsToShow.includes('Material') && <TableCell align="right">{row.material}</TableCell>}
               {columnsToShow.includes('Last Inspection Date') && <TableCell align="right">{row.lastInspectionDate}</TableCell>}
