@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../Header/Header';
-import { Grid, Grow, Paper, Typography, Box, ImageList, ImageListItem } from '@mui/material';
+import { Grid, Grow, Paper, Typography, Box, ImageList, ImageListItem, TextField, Button } from '@mui/material';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, ArcElement, Title, Tooltip, Legend } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import { Asset } from '../../models/Asset'; 
+import { Asset } from '../../models/Asset';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, ArcElement, Title, Tooltip, Legend);
 
 const AssetDetail = () => {
   const [chartData, setChartData] = useState<{ labels: string[], datasets: { label: string, data: number[], fill: boolean, backgroundColor: string, borderColor: string }[] } | null>(null);
+  const [yValue, setYValue] = useState('');
+  const [width, setWidth] = useState('');
 
   const yAxisMapping: { [key: string]: number } = {
     "Urgent Inspection": 30,
@@ -56,7 +58,7 @@ const AssetDetail = () => {
     };
 
     fetchData();
-  }, );
+  }, []);
 
   // Styling for the grid items
   const gridItemStyles = {
@@ -195,18 +197,39 @@ const AssetDetail = () => {
             </Grow>
           </Grid>
 
-          <Grid>
+          <Grid mt={3}> {/* Added margin-top to create a gap */}
             <Grow in timeout={500}>
               <Paper sx={gridItemStyles}>
                 <Typography variant="h4" component="h4" textAlign="center" pb={2} gutterBottom>
-                  Asset Condition
+                  Asset Condition 2
                 </Typography>
-                <Box sx={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <Box sx={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
                   {chartData ? (
                     <Line data={chartData} options={options} />
                   ) : (
                     <Typography variant="body1" textAlign="center">Loading chart data...</Typography>
                   )}
+                  <Box sx={{ display: 'flex', gap: 1, mt: 2 }}>
+                    <TextField
+                      label="Y Value"
+                      variant="outlined"
+                      value={yValue}
+                      onChange={(e) => setYValue(e.target.value)}
+                      size="small"
+                      sx={{ width: '45%' }}
+                    />
+                    <TextField
+                      label="Width"
+                      variant="outlined"
+                      value={width}
+                      onChange={(e) => setWidth(e.target.value)}
+                      size="small"
+                      sx={{ width: '45%' }}
+                    />
+                  </Box>
+                  <Button variant="contained" color="primary" sx={{ mt: 2 }}>
+                    Submit
+                  </Button>
                 </Box>
               </Paper>
             </Grow>
@@ -233,53 +256,39 @@ const AssetDetail = () => {
             </Paper>
           </Grow>
         </Grid>
-      </Grid>
 
-      <Grow in timeout={1100}>
-        <Box sx={{ mt: 5, display: 'flex', justifyContent: 'center', width: '100%' }}>
-          <Paper sx={{ ...gridItemStyles, width: '70%', padding: 2, minHeight: '300px' }}>
-            <Typography variant="h4" component="h4" textAlign="center" pb={2} gutterBottom>
-              Inspection Notes
-            </Typography>
-            <Box sx={{ p: 2 }}>
-              <Typography variant="body1">{inspectionNotes}</Typography>
-            </Box>
-          </Paper>
-        </Box>
-      </Grow>
-
-      <Grow in timeout={1300}>
-        <Box sx={{ mt: 5, display: 'flex', justifyContent: 'center', width: '100%' }}>
-          <Paper sx={{ ...gridItemStyles, width: '70%', padding: 2 }}>
-            <Typography variant="h4" component="h4" textAlign="center" pb={2} gutterBottom>
-              Image Gallery
-            </Typography>
-            <ImageList sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
+        <Grid item xs={11} container direction="column" gap={3}>
+          <Grow in timeout={1100}>
+            <Paper sx={gridItemStyles}>
+              <Typography variant="h4" component="h4" textAlign="center" gutterBottom>
+                Photos
+              </Typography>
               {images.length > 0 ? (
-                images.map((image, index) => (
-                  <ImageListItem key={index} sx={{ flexBasis: '25%', marginBottom: 2 }}>
-                    <Box
-                      component="img"
-                      src={image}
-                      alt={`Asset Image ${index}`}
-                      loading="lazy"
-                      sx={{
-                        width: '100%',
-                        height: 'auto',
-                        maxHeight: 200, // Setting a maximum height for images
-                        borderRadius: 2,
-                        boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
-                      }}
-                    />
-                  </ImageListItem>
-                ))
+                <ImageList cols={4} gap={8}>
+                  {images.map((imageURL, index) => (
+                    <ImageListItem key={index}>
+                      <img src={imageURL} alt={`Asset Image ${index}`} loading="lazy" />
+                    </ImageListItem>
+                  ))}
+                </ImageList>
               ) : (
-                <Typography variant="body1" textAlign="center">No images for this asset yet.</Typography>
+                <Typography variant="body1" textAlign="center">No photos available</Typography>
               )}
-            </ImageList>
-          </Paper>
-        </Box>
-      </Grow>
+            </Paper>
+          </Grow>
+
+          <Grow in timeout={1300}>
+            <Paper sx={gridItemStyles}>
+              <Typography variant="h4" component="h4" textAlign="center" gutterBottom>
+                Notes
+              </Typography>
+              <Box sx={{ padding: 2, overflowY: 'auto' }}>
+                <Typography variant="body1">{inspectionNotes}</Typography>
+              </Box>
+            </Paper>
+          </Grow>
+        </Grid>
+      </Grid>
     </div>
   );
 };
