@@ -86,16 +86,38 @@ function Home() {
         <Grid item xs={5}>
           <Grow in timeout={500}>
             <Paper sx={gridItemStyles}>
-              <Typography variant="h4" component="h4" textAlign="center" gutterBottom>Asset Condition</Typography>
+              <Typography variant="h4" component="h4" textAlign="center" gutterBottom>Alerts</Typography>
               <Stack direction="column" spacing={2} sx={gridItemStyles}>
                 {criticalAssets.length > 0 ? (
                   criticalAssets.map((asset, index) => (
                     <Card key={index} variant="outlined">
                       <CardActionArea onClick={() => handleCardClick(asset)}>
                         <CardContent>
-                          <Typography variant="h5" component="h2">{asset.name}</Typography>
-                          <Typography variant="body2" color="textSecondary">Condition: {asset.condition}</Typography>
-                          <Typography variant="body2" color="textSecondary">Last Inspection: {asset.lastInspectionDate}</Typography>
+                          <Grid container alignItems="center">
+                            <Grid item xs={8}>
+                              <Typography variant="h5" component="h2">{asset.name}</Typography>
+                            </Grid>
+                            <Grid item xs={4}>
+                              <Typography
+                                variant="body2"
+                                color={
+                                  asset.condition === "Excellent" || asset.condition === "Good"
+                                    ? "green"
+                                    : asset.condition === "Poor" || asset.condition === "Urgent Inspection"
+                                    ? "red"
+                                    : asset.condition === "Requires Inspection"
+                                    ? "orange"
+                                    : "textSecondary"
+                                }
+                                style={{ textAlign: 'right' }}
+                              >
+                                Condition: {asset.condition}
+                              </Typography>
+                            </Grid>
+                          </Grid>
+                          <Typography variant="body2" color="textSecondary" style={{ textAlign: 'right', marginTop: '8px' }}>
+                            Last Inspection: {asset.lastInspectionDate}
+                          </Typography>
                         </CardContent>
                       </CardActionArea>
                     </Card>
