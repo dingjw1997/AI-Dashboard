@@ -58,7 +58,7 @@ const AssetDetail = () => {
     };
 
     fetchData();
-  }, []);
+  },);
 
   // Styling for the grid items
   const gridItemStyles = {
@@ -73,10 +73,12 @@ const AssetDetail = () => {
     },
     '::webkit-scrollbar': { display: 'none' },
     scrollbarWidth: 'none',
-    maxHeight: '500px',
     boxShadow: '0 2px 10px 0 rgba(0,0,0,0.1)',
     display: 'flex',
     flexDirection: 'column',
+    width: '100%',
+    maxWidth: '90%',
+    margin: '10px',
   };
 
   // Chart options
@@ -105,6 +107,8 @@ const AssetDetail = () => {
         },
       },
     },
+    responsive: true,
+    maintainAspectRatio: false,
   };
 
   // Retrieve asset data from localStorage
@@ -178,17 +182,19 @@ const AssetDetail = () => {
   return (
     <div>
       <Header />
-      <Grid container pt={3} px={3} gap={3} justifyContent="center">
-        <Grid item xs={5} direction="column">
-          <Grid>
+      <Grid container pt={3} px={3} gap={3} justifyContent="center" sx={{ maxWidth: '90%', margin: '0 auto' }}>
+        <Grid item xs={12} container spacing={3}>
+          <Grid item xs={12} md={6}>
             <Grow in timeout={500}>
               <Paper sx={gridItemStyles}>
                 <Typography variant="h4" component="h4" textAlign="center" pb={2} gutterBottom>
                   Asset Condition
                 </Typography>
-                <Box sx={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <Box sx={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
                   {chartData ? (
-                    <Line data={chartData} options={options} />
+                    <Box sx={{ width: '80%', height: '400px', maxWidth: '90%' }}>
+                      <Line data={chartData} options={options} />
+                    </Box>
                   ) : (
                     <Typography variant="body1" textAlign="center">Loading chart data...</Typography>
                   )}
@@ -196,16 +202,30 @@ const AssetDetail = () => {
               </Paper>
             </Grow>
           </Grid>
-
-          <Grid mt={3}> {/* Added margin-top to create a gap */}
-            <Grow in timeout={500}>
+          <Grid item xs={12} md={6}>
+            <Grow in timeout={700}>
+              <Paper sx={gridItemStyles}>
+                <Typography variant="h4" component="h4" textAlign="center" pb={2} gutterBottom>
+                  Asset Details
+                </Typography>
+                {renderDetails(assetInfo)}
+              </Paper>
+            </Grow>
+          </Grid>
+        </Grid>
+        
+        <Grid item xs={12} container spacing={3}>
+          <Grid item xs={12} md={6}>
+            <Grow in timeout={900}>
               <Paper sx={gridItemStyles}>
                 <Typography variant="h4" component="h4" textAlign="center" pb={2} gutterBottom>
                   Asset Condition 2
                 </Typography>
-                <Box sx={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+                <Box sx={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', height: '100%' }}>
                   {chartData ? (
-                    <Line data={chartData} options={options} />
+                    <Box sx={{ width: '80%', height: '400px', maxWidth: '90%' }}>
+                      <Line data={chartData} options={options} />
+                    </Box>
                   ) : (
                     <Typography variant="body1" textAlign="center">Loading chart data...</Typography>
                   )}
@@ -234,33 +254,22 @@ const AssetDetail = () => {
               </Paper>
             </Grow>
           </Grid>
-
+          <Grid item xs={12} md={6}>
+            <Grow in timeout={900}>
+              <Paper sx={gridItemStyles}>
+                <Typography variant="h4" component="h4" textAlign="center" pb={2} gutterBottom>
+                  Location
+                </Typography>
+                {renderDetails(locationInfo)}
+              </Paper>
+            </Grow>
+          </Grid>
         </Grid>
 
-        <Grid item xs={6} container direction="column" gap={3}>
-          <Grow in timeout={700}>
-            <Paper sx={{ ...gridItemStyles, flex: 1 }}>
-              <Typography variant="h4" component="h4" textAlign="center" pb={2} gutterBottom>
-                Asset Details
-              </Typography>
-              {renderDetails(assetInfo)}
-            </Paper>
-          </Grow>
-
-          <Grow in timeout={900}>
-            <Paper sx={{ ...gridItemStyles, flex: 1 }}>
-              <Typography variant="h4" component="h4" textAlign="center" pb={2} gutterBottom>
-                Location
-              </Typography>
-              {renderDetails(locationInfo)}
-            </Paper>
-          </Grow>
-        </Grid>
-
-        <Grid item xs={11} container direction="column" gap={3}>
+        <Grid item xs={12}>
           <Grow in timeout={1100}>
             <Paper sx={gridItemStyles}>
-              <Typography variant="h4" component="h4" textAlign="center" gutterBottom>
+              <Typography variant="h4" component="h4" textAlign="center" pb={2} gutterBottom>
                 Photos
               </Typography>
               {images.length > 0 ? (
@@ -276,13 +285,15 @@ const AssetDetail = () => {
               )}
             </Paper>
           </Grow>
+        </Grid>
 
+        <Grid item xs={12}>
           <Grow in timeout={1300}>
             <Paper sx={gridItemStyles}>
-              <Typography variant="h4" component="h4" textAlign="center" gutterBottom>
+              <Typography variant="h4" component="h4" textAlign="center" pb={2} gutterBottom>
                 Notes
               </Typography>
-              <Box sx={{ padding: 2, overflowY: 'auto' }}>
+              <Box sx={{ padding: 2 }}>
                 <Typography variant="body1">{inspectionNotes}</Typography>
               </Box>
             </Paper>
