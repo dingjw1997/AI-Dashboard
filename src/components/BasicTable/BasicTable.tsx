@@ -58,7 +58,7 @@ function BasicTable({ columnsToShow = [] }: BasicTableProps) {
     localStorage.setItem('currentAssetDetails', JSON.stringify(row));
     navigate(`/details/${row.name}`);
   };
-
+  // realign asset headings to start from No.
   return (
     <TableContainer component={Paper} square variant="outlined">
       <Table aria-label="simple table">

@@ -178,7 +178,7 @@ const AssetDetail = () => {
 
   const inspectionNotes = assetDetails ? assetDetails.inspectionNotes : 'No notes available';
   const images = assetDetails ? assetDetails.photoURLs : [];
-
+  // added second graph in asset details
   return (
     <div>
       <Header />
@@ -231,7 +231,7 @@ const AssetDetail = () => {
                   )}
                   <Box sx={{ display: 'flex', gap: 1, mt: 2 }}>
                     <TextField
-                      label="Y Value"
+                      label="Y Value"   // added y value input box
                       variant="outlined"
                       value={yValue}
                       onChange={(e) => setYValue(e.target.value)}
@@ -239,7 +239,7 @@ const AssetDetail = () => {
                       sx={{ width: '45%' }}
                     />
                     <TextField
-                      label="Width"
+                      label="Width"    // added width value input box
                       variant="outlined"
                       value={width}
                       onChange={(e) => setWidth(e.target.value)}

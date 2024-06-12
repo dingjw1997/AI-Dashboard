@@ -77,7 +77,7 @@ function Home() {
     localStorage.setItem('currentAssetDetails', JSON.stringify(asset));
     navigate(`/details/${asset.name}`);
   };
-
+  // Renamed Asset Conditions to Alerts, Aligned Conditions and Last Inspection to the right of the box.
   return (
     <div>
       <Header />
@@ -99,7 +99,7 @@ function Home() {
                             </Grid>
                             <Grid item xs={4}>
                               <Typography
-                                variant="body2"
+                                variant="body2"  // implemented coloured display according to asset condition
                                 color={
                                   asset.condition === "Excellent" || asset.condition === "Good"
                                     ? "green"
